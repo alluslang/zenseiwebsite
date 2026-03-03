@@ -28,8 +28,7 @@ export default function Navbar() {
                 <div className="nav-links">
                     <a href="#product" className="nav-link">{t('navbar.product')}</a>
                     <a href="#about" className="nav-link">{t('navbar.about_us')}</a>
-                    <a href="#social" className="nav-link">{t('navbar.social_media')}</a>
-                    <a href="#location" className="nav-link">{t('navbar.location')}</a>
+                    <a href="#instagram" className="nav-link">{t('navbar.social_media')}</a>
                 </div>
 
                 <div className="nav-logo">
@@ -71,8 +70,7 @@ export default function Navbar() {
 
                 <a href="#product" className="mobile-nav-link" onClick={toggleMobileMenu}>{t('navbar.product')}</a>
                 <a href="#about" className="mobile-nav-link" onClick={toggleMobileMenu}>{t('navbar.about_us')}</a>
-                <a href="#social" className="mobile-nav-link" onClick={toggleMobileMenu}>{t('navbar.social_media')}</a>
-                <a href="#location" className="mobile-nav-link" onClick={toggleMobileMenu}>{t('navbar.location')}</a>
+                <a href="#instagram" className="mobile-nav-link" onClick={toggleMobileMenu}>{t('navbar.social_media')}</a>
                 <div className="mobile-menu-actions">
                     <button className="btn btn-dark mobile-btn">{t('navbar.join_partnership')}</button>
                     <button className="btn btn-white mobile-btn">

@@ -4,8 +4,6 @@ import Hero from './components/Hero';
 import Products from './components/Products';
 import AboutUs from './components/AboutUs';
 import InstagramFeed from './components/InstagramFeed';
-import SocialLinks from './components/SocialLinks';
-import Locations from './components/Locations';
 import Footer from './components/Footer';
 import PromoBanner from './components/PromoBanner';
 import './App.css';
@@ -36,8 +34,6 @@ function App() {
         <Products />
         <AboutUs />
         <InstagramFeed />
-        <SocialLinks />
-        <Locations />
       </main>
       <Footer />
     </>

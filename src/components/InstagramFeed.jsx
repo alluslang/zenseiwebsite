@@ -1,7 +1,55 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Instagram } from 'lucide-react';
+import { Instagram, Youtube, Mail, MessageCircle } from 'lucide-react';
 import './InstagramFeed.css';
+
+// TikTok doesn't have a standard icon in lucide-react, using a custom SVG for it
+const TikTokIcon = ({ size = 24, color = "currentColor" }) => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={color}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+    >
+        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path>
+    </svg>
+);
+
+const socialLinksData = [
+    {
+        id: 1,
+        platform: 'TikTok',
+        url: 'https://www.tiktok.com/@zensei.id',
+        icon: <TikTokIcon size={28} />,
+        color: '#000000' // Original TikTok black
+    },
+    {
+        id: 2,
+        platform: 'YouTube',
+        url: 'https://www.youtube.com/',
+        icon: <Youtube size={28} />,
+        color: '#FF0000' // Original YouTube red
+    },
+    {
+        id: 3,
+        platform: 'WhatsApp',
+        url: 'https://wa.me/6281234567890',
+        icon: <MessageCircle size={28} />,
+        color: '#25D366' // Original WhatsApp green
+    },
+    {
+        id: 4,
+        platform: 'Email',
+        url: 'mailto:hello@zensei.co.id',
+        icon: <Mail size={28} />,
+        color: '#EA4335' // Custom Email red/orange
+    }
+];
 
 export default function InstagramFeed() {
     useEffect(() => {
@@ -40,6 +88,38 @@ export default function InstagramFeed() {
                     transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
                 >
                     <div className="elfsight-app-decf41a6-07f5-4770-9e10-b542c1373434" data-elfsight-app-lazy></div>
+                </motion.div>
+
+                {/* Integrated Social Links */}
+                <motion.div
+                    className="integrated-social-links"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                >
+                    <p className="social-links-text">Temukan kami juga di platform lainnya:</p>
+                    <div className="integrated-social-icons">
+                        {socialLinksData.map((link, index) => (
+                            <motion.a
+                                key={link.id}
+                                href={link.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="integrated-social-icon"
+                                aria-label={`Visit our ${link.platform}`}
+                                style={{ '--hover-color': link.color }}
+                                whileHover={{ y: -5, scale: 1.15 }}
+                                whileTap={{ scale: 0.95 }}
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: index * 0.1 + 0.5, duration: 0.4 }}
+                            >
+                                {link.icon}
+                            </motion.a>
+                        ))}
+                    </div>
                 </motion.div>
             </div>
         </section>

@@ -47,6 +47,78 @@
     /* box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05); */
 }
 
+/* This attempts to make the Elfsight widget fit nicely if it overflows */
+.instagram-feed-container .elfsight-app-decf41a6-07f5-4770-9e10-b542c1373434 {
+    width: 100% !important;
+    overflow: hidden;
+}
+
+/* --- Integrated Social Links --- */
+
+.integrated-social-links {
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--color-gray-light);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.social-links-text {
+    font-size: 1.1rem;
+    color: var(--color-gray-dark);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+
+.integrated-social-icons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.integrated-social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    color: var(--color-black);
+    /* Default icon color */
+    background-color: transparent;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+/* Hover effects utilizing the locally defined CSS variable */
+.integrated-social-icon:hover {
+    color: var(--hover-color);
+    background-color: rgba(250, 250, 250, 0.8);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 640px) {
+    .integrated-social-links {
+        margin-top: 3rem;
+        padding-top: 2rem;
+    }
+
+    .social-links-text {
+        font-size: 1rem;
+    }
+
+    .integrated-social-icons {
+        gap: 1.25rem;
+    }
+
+    .integrated-social-icon {
+        width: 44px;
+        height: 44px;
+    }
+}
+
 @media (max-width: 768px) {
     .instagram-section {
         padding: 4rem 0;
