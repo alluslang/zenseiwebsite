@@ -9,7 +9,7 @@ const resources = {
             "navbar": {
                 "product": "Product",
                 "about_us": "About us",
-                "news": "News",
+                "social_media": "Social Media",
                 "location": "Location",
                 "join_partnership": "Join Partnership",
                 "join_partnership": "Join Partnership",
@@ -39,7 +39,7 @@ const resources = {
             "navbar": {
                 "product": "Produk",
                 "about_us": "Tentang Kami",
-                "news": "Berita",
+                "social_media": "Sosial Media",
                 "location": "Lokasi",
                 "join_partnership": "Gabung Kemitraan",
                 "join_partnership": "Gabung Kemitraan",

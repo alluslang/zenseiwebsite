@@ -28,7 +28,7 @@ export default function Navbar() {
                 <div className="nav-links">
                     <a href="#product" className="nav-link">{t('navbar.product')}</a>
                     <a href="#about" className="nav-link">{t('navbar.about_us')}</a>
-                    <a href="#news" className="nav-link">{t('navbar.news')}</a>
+                    <a href="#social" className="nav-link">{t('navbar.social_media')}</a>
                     <a href="#location" className="nav-link">{t('navbar.location')}</a>
                 </div>
 
@@ -40,9 +40,13 @@ export default function Navbar() {
                     />
                 </div>
 
-                {/* Mobile Hamburger Toggle */}
+                {/* Mobile Hamburger Toggle & Lang */}
                 <div className="mobile-toggle-wrapper">
-                    <button className="mobile-toggle" onClick={toggleMobileMenu} aria-label="Toggle menu">
+                    <button className="btn lang-toggle" onClick={toggleLanguage} aria-label="Toggle Language" style={{ padding: '0.25rem' }}>
+                        <Globe size={18} style={{ marginRight: '4px' }} />
+                        <span>{i18n.language.toUpperCase().startsWith('ID') ? 'ID' : 'EN'}</span>
+                    </button>
+                    <button className="mobile-toggle" onClick={toggleMobileMenu} aria-label="Toggle menu" style={{ marginLeft: '1rem' }}>
                         {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
                 </div>
@@ -65,17 +69,9 @@ export default function Navbar() {
             {/* Mobile Dropdown Menu */}
             <div className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
 
-                {/* Mobile Lang Switcher */}
-                <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '-1rem' }}>
-                    <button className="btn lang-toggle" onClick={toggleLanguage}>
-                        <Globe size={18} />
-                        <span>{i18n.language.toUpperCase().startsWith('ID') ? 'ID' : 'EN'}</span>
-                    </button>
-                </div>
-
                 <a href="#product" className="mobile-nav-link" onClick={toggleMobileMenu}>{t('navbar.product')}</a>
                 <a href="#about" className="mobile-nav-link" onClick={toggleMobileMenu}>{t('navbar.about_us')}</a>
-                <a href="#news" className="mobile-nav-link" onClick={toggleMobileMenu}>{t('navbar.news')}</a>
+                <a href="#social" className="mobile-nav-link" onClick={toggleMobileMenu}>{t('navbar.social_media')}</a>
                 <a href="#location" className="mobile-nav-link" onClick={toggleMobileMenu}>{t('navbar.location')}</a>
                 <div className="mobile-menu-actions">
                     <button className="btn btn-dark mobile-btn">{t('navbar.join_partnership')}</button>
