@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Products from './components/Products';
 import AboutUs from './components/AboutUs';
+import InstagramFeed from './components/InstagramFeed';
 import PromoBanner from './components/PromoBanner';
 import './App.css';
 
@@ -31,6 +32,7 @@ function App() {
         <Hero />
         <Products />
         <AboutUs />
+        <InstagramFeed />
       </main>
     </>
   );
