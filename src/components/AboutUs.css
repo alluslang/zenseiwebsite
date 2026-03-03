@@ -244,4 +244,24 @@
     .about-card {
         grid-template-rows: 350px 1fr;
     }
+
+    .about-content {
+        padding: 1.5rem 1rem 3.5rem 1rem;
+        overflow-y: auto;
+        scrollbar-width: none;
+    }
+
+    .about-content::-webkit-scrollbar {
+        display: none;
+    }
+
+    .about-content h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .about-desc {
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
 }

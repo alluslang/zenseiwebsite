@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 import { supabase } from '../lib/supabase';
 import './Products.css';
 
@@ -154,13 +155,25 @@ export default function Products() {
     return (
         <section className="products-section" id="product">
             <div className="container">
-                <div className="products-header">
+                <motion.div
+                    className="products-header"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                >
                     <h2>{getLocalizedHeader('header_title')}</h2>
                     <p>{getLocalizedHeader('header_desc')}</p>
-                </div>
+                </motion.div>
             </div>
 
-            <div className="carousel-wrapper">
+            <motion.div
+                className="carousel-wrapper"
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
+            >
                 <button className="carousel-nav-btn prev" onClick={() => scroll('left')}>
                     <ChevronLeft size={24} color="var(--color-black)" />
                 </button>
@@ -198,9 +211,15 @@ export default function Products() {
                 <button className="carousel-nav-btn next" onClick={() => scroll('right')}>
                     <ChevronRight size={24} color="var(--color-black)" />
                 </button>
-            </div>
+            </motion.div>
 
-            <div className="container">
+            <motion.div
+                className="container"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
+            >
                 <div className="carousel-pagination">
                     {[...Array(dotCount)].map((_, index) => (
                         <div
@@ -226,7 +245,7 @@ export default function Products() {
                         </span>
                     </button>
                 </div>
-            </div>
+            </motion.div>
 
             {/* Shape Divider Transition to next section */}
             <div className="products-curve-divider">

@@ -92,7 +92,8 @@ export default function Hero() {
                         className="hero-content-left"
                         variants={staggerContainer}
                         initial="hidden"
-                        animate="visible"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.2 }}
                     >
                         <motion.div className="hero-badge" variants={fadeUp}>
                             <div className="stars">
@@ -126,7 +127,8 @@ export default function Hero() {
                         <motion.div
                             className="hero-image-wrapper"
                             initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true, amount: 0.2 }}
                             transition={{ duration: 0.8, ease: "easeOut" }}
                         >
                             <motion.img

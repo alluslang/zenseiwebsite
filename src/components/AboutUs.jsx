@@ -81,7 +81,13 @@ export default function AboutUs() {
         <section className="about-section" id="about">
             <div className="container about-container">
                 {/* Header text */}
-                <div className="about-header text-center">
+                <motion.div
+                    className="about-header text-center"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                >
                     <h2>{t('about.heading')}</h2>
                     <p>{t('about.desc').split(', ').map((str, index, array) => (
                         <React.Fragment key={index}>
@@ -89,10 +95,16 @@ export default function AboutUs() {
                             {index === 1 && <br />}
                         </React.Fragment>
                     ))}</p>
-                </div>
+                </motion.div>
 
                 {/* Navigation Tabs */}
-                <div className="about-tabs-wrapper">
+                <motion.div
+                    className="about-tabs-wrapper"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+                >
                     <div className="about-tabs">
                         {slides.map((slide, index) => (
                             <button
@@ -104,10 +116,16 @@ export default function AboutUs() {
                             </button>
                         ))}
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Slider Card */}
-                <div className="about-card-wrapper">
+                <motion.div
+                    className="about-card-wrapper"
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.8, ease: "easeOut", type: "spring", bounce: 0.2, delay: 0.2 }}
+                >
                     <div className="about-card-container">
                         <AnimatePresence initial={false}>
                             <motion.div
@@ -166,7 +184,7 @@ export default function AboutUs() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
     );
