@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Play, Pause } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import './AboutUs.css';
 
@@ -10,6 +11,7 @@ export default function AboutUs() {
     const [activeIndex, setActiveIndex] = useState(0);
     const [loading, setLoading] = useState(true);
     const [progress, setProgress] = useState(0);
+    const [isPlaying, setIsPlaying] = useState(true);
 
     const [isFirstRender, setIsFirstRender] = useState(true);
 
@@ -50,6 +52,7 @@ export default function AboutUs() {
         const tickRate = 50; // Update progress every 50ms for smoothness
 
         interval = setInterval(() => {
+            if (!isPlaying) return; // Freeze progress if paused
             p += (tickRate / slideDuration) * 100;
             if (p >= 100) {
                 p = 0;
@@ -59,7 +62,7 @@ export default function AboutUs() {
         }, tickRate);
 
         return () => clearInterval(interval);
-    }, [activeIndex, slides.length]); // Reset timer when slide changes manually or automatically
+    }, [activeIndex, slides.length, isPlaying]); // Reset timer when slide changes manually, automatically, or play state changes
 
     const handleTabClick = (index) => {
         setActiveIndex(index);
@@ -167,11 +170,17 @@ export default function AboutUs() {
                         {/* Progress Bars Indicator Track - moved outside of AnimatePresence to be static */}
                         <div className="about-progress-track-wrapper">
                             <div className="about-progress-tracks">
+                                <button className="about-play-btn" onClick={() => setIsPlaying(!isPlaying)} aria-label={isPlaying ? "Pause slider" : "Play slider"}>
+                                    {isPlaying ? <Pause size={16} color="var(--color-black)" fill="var(--color-black)" /> : <Play size={16} color="var(--color-black)" fill="var(--color-black)" />}
+                                </button>
                                 {slides.map((_, idx) => (
                                     <div
                                         key={idx}
                                         className={`progress-track ${idx < activeIndex ? 'completed' : ''} ${idx === activeIndex ? 'active' : ''}`}
-                                        onClick={() => handleTabClick(idx)}
+                                        onClick={() => {
+                                            handleTabClick(idx);
+                                            setIsPlaying(true); // Auto-resume on manual click
+                                        }}
                                     >
                                         {idx === activeIndex && (
                                             <div
