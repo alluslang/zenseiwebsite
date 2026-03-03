@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Instagram, Youtube, Mail, MessageCircle, Music } from 'lucide-react';
 import { supabase } from '../lib/supabase';
@@ -27,10 +28,11 @@ const iconMap = {
     'Youtube': (props) => <Youtube {...props} />,
     'MessageCircle': (props) => <MessageCircle {...props} />,
     'Mail': (props) => <Mail {...props} />,
-    'Music': (props) => <TikTokIcon {...props} /> // Fallback TikTok to Music icon string
+    'TikTok': (props) => <TikTokIcon {...props} /> // Map 'TikTok' from DB to TikTokIcon
 };
 
 export default function InstagramFeed() {
+    const { t } = useTranslation();
     const [socialLinks, setSocialLinks] = useState([]);
 
     useEffect(() => {
@@ -76,8 +78,8 @@ export default function InstagramFeed() {
                     <div className="instagram-icon-wrapper">
                         <Instagram size={32} color="var(--color-primary)" />
                     </div>
-                    <h2>Follow Us @zensei.id</h2>
-                    <p>Share your moments and stay updated with our latest offerings.</p>
+                    <h2>{t('social.follow_us')} @zensei.id</h2>
+                    <p>{t('social.share_moments')}</p>
                 </motion.div>
 
                 {/* Elfsight Widget Container */}
@@ -101,7 +103,7 @@ export default function InstagramFeed() {
                 >
                     {socialLinks.length > 0 && (
                         <>
-                            <p className="social-links-text">Temukan kami juga di platform lainnya:</p>
+                            <p className="social-links-text">{t('social.find_us')}</p>
                             <div className="integrated-social-icons">
                                 {socialLinks.map((link, index) => {
                                     const IconComponent = iconMap[link.icon_name] || iconMap['Instagram']; // Fallback icon
@@ -112,7 +114,7 @@ export default function InstagramFeed() {
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="integrated-social-icon"
-                                            aria-label={`Visit our ${link.platform_name}`}
+                                            aria-label={`Visit our ${link.platform_name} `}
                                             style={{ '--hover-color': link.color }}
                                             whileHover={{ y: -5, scale: 1.15 }}
                                             whileTap={{ scale: 0.95 }}

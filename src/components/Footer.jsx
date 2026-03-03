@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import './Footer.css';
 
 export default function Footer() {
+    const { t, i18n } = useTranslation();
     const [footerData, setFooterData] = useState({
         description: 'Lebih dari sekadar satu hidangan. Nikmati sensasi sei sapi dan ayam asap premium dengan aneka sambal Nusantara.',
+        description_en: 'More than just a meal. Enjoy the sensation of premium smoked beef and chicken with a variety of Nusantara sambals.',
         address: 'Jl. R.E. Martadinata No.61, Bandung',
+        address_en: '61 R.E. Martadinata St, Bandung',
         phone: '+62 812-3456-7890',
         email: 'hello@zensei.co.id'
     });
@@ -31,6 +35,8 @@ export default function Footer() {
 
         fetchFooterData();
     }, []);
+    const currentLang = i18n.language; // 'id' or 'en'
+
     return (
         <footer className="footer-section">
             <div className="container">
@@ -39,27 +45,27 @@ export default function Footer() {
                     <div className="footer-brand">
                         <img src="/zenseired.svg" alt="Zensei Logo" className="footer-logo" />
                         <p className="footer-desc">
-                            {footerData.description}
+                            {currentLang === 'en' && footerData.description_en ? footerData.description_en : footerData.description}
                         </p>
                     </div>
 
                     {/* Links Column */}
                     <div className="footer-links">
-                        <h4>Menu Navigasi</h4>
+                        <h4>{t('footer.nav_menu')}</h4>
                         <ul>
-                            <li><a href="#product">Produk</a></li>
-                            <li><a href="#about">Tentang Kami</a></li>
-                            <li><a href="#instagram">Sosial Media</a></li>
+                            <li><a href="#product">{t('navbar.product')}</a></li>
+                            <li><a href="#about">{t('navbar.about_us')}</a></li>
+                            <li><a href="#instagram">{t('navbar.social_media')}</a></li>
                         </ul>
                     </div>
 
                     {/* Contact Column */}
                     <div className="footer-contact">
-                        <h4>Hubungi Kami</h4>
+                        <h4>{t('footer.contact_us')}</h4>
                         <ul>
                             <li>
                                 <MapPin size={18} />
-                                <span>{footerData.address}</span>
+                                <span>{currentLang === 'en' && footerData.address_en ? footerData.address_en : footerData.address}</span>
                             </li>
                             <li>
                                 <Phone size={18} />
@@ -74,7 +80,7 @@ export default function Footer() {
                 </div>
 
                 <div className="footer-bottom">
-                    <p>&copy; {new Date().getFullYear()} Zensei Indonesia. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} {t('footer.rights_reserved')}</p>
                 </div>
             </div>
         </footer>

@@ -31,6 +31,16 @@ const resources = {
             "about": {
                 "heading": "Tradition Elevated.",
                 "desc": "We honor sei as a culinary heritage, elevating it through higher quality standards, strict hygiene, and a process tailored for modern needs."
+            },
+            "social": {
+                "follow_us": "Follow Us",
+                "share_moments": "Share your moments and stay updated with our latest offerings.",
+                "find_us": "Find us on other platforms:"
+            },
+            "footer": {
+                "nav_menu": "Navigation Menu",
+                "contact_us": "Contact Us",
+                "rights_reserved": "Zensei Indonesia. All rights reserved."
             }
         }
     },
@@ -61,6 +71,16 @@ const resources = {
             "about": {
                 "heading": "Tradisi yang Ditingkatkan.",
                 "desc": "Kami menghormati sei sebagai warisan kuliner, meningkatkannya melalui standar kualitas yang lebih tinggi, kebersihan yang ketat, dan proses yang disesuaikan untuk kebutuhan modern."
+            },
+            "social": {
+                "follow_us": "Ikuti Kami",
+                "share_moments": "Bagikan momen Anda dan dapatkan update penawaran terbaru kami.",
+                "find_us": "Temukan kami juga di platform lainnya:"
+            },
+            "footer": {
+                "nav_menu": "Menu Navigasi",
+                "contact_us": "Hubungi Kami",
+                "rights_reserved": "Zensei Indonesia. Hak cipta dilindungi."
             }
         }
     }
