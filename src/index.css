@@ -19,6 +19,7 @@
   padding: 0;
 }
 
+html,
 body {
   font-family: var(--font-secondary);
   background: radial-gradient(circle at 50% 50%, #E61517 0%, var(--color-primary) 60%);
@@ -28,6 +29,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
   overflow-x: hidden;
+  width: 100%;
+}
+
+#root {
+  overflow-x: hidden;
+  width: 100%;
 }
 
 /* Typography Utility Classes */

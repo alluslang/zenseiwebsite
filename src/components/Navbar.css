@@ -7,8 +7,13 @@
     /* Ensures full width correctly with fixed position */
     width: 100%;
     z-index: 50;
-    transition: top 0.3s ease;
-    /* smoothly slide when promo banner appears/disappears */
+    transition: transform 0.3s ease, top 0.3s ease;
+    /* smoothly slide when promo banner appears/disappears or scroll hiding */
+}
+
+/* Scroll-to-hide functionality */
+.navbar-container.nav-hidden {
+    transform: translateY(-100%);
 }
 
 /* React to PromoBanner */
@@ -176,6 +181,8 @@ body.has-promo-banner .navbar-container {
 
     .navbar-pill {
         padding: 1rem 1.5rem;
+        width: 90%;
+        /* constraint on mobile to avoid touching horizontal edges */
         /* Increased height */
     }
 
