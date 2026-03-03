@@ -3,6 +3,7 @@ import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { supabase } from '../lib/supabase';
+import { useActionButtons } from '../lib/useActionButtons';
 import './Products.css';
 
 const products = [
@@ -50,6 +51,7 @@ const products = [
 
 export default function Products() {
     const { t, i18n } = useTranslation();
+    const { buttons } = useActionButtons();
     const scrollContainerRef = useRef(null);
     const [headerData, setHeaderData] = useState(null);
     const [productsData, setProductsData] = useState([]);
@@ -232,18 +234,18 @@ export default function Products() {
                 </div>
 
                 <div className="product-actions">
-                    <button className="btn btn-red">
+                    <a href={buttons.ready_to_eat} target="_blank" rel="noopener noreferrer" className="btn btn-red">
                         {t('products.ready_to_eat')}
                         <span className="btn-icon">
                             <ChevronRight size={14} />
                         </span>
-                    </button>
-                    <button className="btn btn-white">
+                    </a>
+                    <a href={buttons.ready_to_cook} target="_blank" rel="noopener noreferrer" className="btn btn-white">
                         {t('products.ready_to_cook')}
                         <span className="btn-icon">
                             <ChevronRight size={14} />
                         </span>
-                    </button>
+                    </a>
                 </div>
             </motion.div>
 

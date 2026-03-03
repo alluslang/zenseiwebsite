@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowUpRight, Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
+import { useActionButtons } from '../lib/useActionButtons';
 import './Hero.css';
 
 export default function Hero() {
@@ -10,6 +11,7 @@ export default function Hero() {
     const [loading, setLoading] = useState(true);
     const [fetchError, setFetchError] = useState(null);
     const { i18n } = useTranslation();
+    const { buttons } = useActionButtons();
 
     // Helper to get the correct column based on active language (e.g., 'en' or 'id')
     const getLocalizedField = (fieldName) => {
@@ -113,12 +115,12 @@ export default function Hero() {
                         </motion.p>
 
                         <motion.div className="hero-actions" variants={fadeUp}>
-                            <button className="btn btn-primary">
+                            <a href={buttons.hero_primary} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
                                 {getLocalizedField('primary_button_text')}
                                 <span className="btn-icon">
                                     <ArrowUpRight size={14} />
                                 </span>
-                            </button>
+                            </a>
                         </motion.div>
                     </motion.div>
 

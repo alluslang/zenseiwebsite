@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ChevronRight, Menu, X, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useActionButtons } from '../lib/useActionButtons';
 import './Navbar.css';
 
 export default function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isNavHovered, setIsNavHovered] = useState(false);
     const { t, i18n } = useTranslation();
+    const { buttons } = useActionButtons();
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -55,12 +57,12 @@ export default function Navbar() {
                         <Globe size={18} />
                         <span>{i18n.language.toUpperCase().startsWith('ID') ? 'ID' : 'EN'}</span>
                     </button>
-                    <button className="btn btn-dark">
+                    <a href={buttons.join_partnership} target="_blank" rel="noopener noreferrer" className="btn btn-dark">
                         {t('navbar.join_partnership')}
                         <span className="btn-icon">
                             <ChevronRight size={14} />
                         </span>
-                    </button>
+                    </a>
                 </div>
 
             </div>
@@ -72,13 +74,13 @@ export default function Navbar() {
                 <a href="#about" className="mobile-nav-link" onClick={toggleMobileMenu}>{t('navbar.about_us')}</a>
                 <a href="#instagram" className="mobile-nav-link" onClick={toggleMobileMenu}>{t('navbar.social_media')}</a>
                 <div className="mobile-menu-actions">
-                    <button className="btn btn-dark mobile-btn">{t('navbar.join_partnership')}</button>
-                    <button className="btn btn-white mobile-btn">
+                    <a href={buttons.join_partnership} target="_blank" rel="noopener noreferrer" className="btn btn-dark mobile-btn">{t('navbar.join_partnership')}</a>
+                    <a href={buttons.online_order} target="_blank" rel="noopener noreferrer" className="btn btn-white mobile-btn">
                         {t('navbar.online_order')}
                         <span className="btn-icon">
                             <ChevronRight size={14} />
                         </span>
-                    </button>
+                    </a>
                 </div>
             </div>
         </nav>
