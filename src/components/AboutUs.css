@@ -233,9 +233,12 @@
     }
 
     .about-progress-track-wrapper {
-        width: calc(100% - 2rem);
-        right: 1rem;
-        bottom: 2rem;
+        width: 100%;
+        right: 0;
+        bottom: 0;
+        padding: 2rem 1.5rem 1.5rem 1.5rem;
+        background: linear-gradient(to top, rgba(255, 255, 255, 1) 70%, rgba(255, 255, 255, 0));
+        z-index: 20;
     }
 }
 
@@ -263,7 +266,7 @@
     }
 
     .about-content {
-        padding: 1.5rem 1rem 5.5rem 1rem;
+        padding: 1.5rem 1rem 6.5rem 1rem;
         overflow-y: auto;
         scrollbar-width: none;
         text-align: justify;

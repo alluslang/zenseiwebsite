@@ -36,8 +36,8 @@
 .marquee-content {
     display: flex;
     align-items: center;
-    /* Longer duration since there are now 10 copies per block */
-    animation: marquee 35s linear infinite;
+    /* Longer duration since there are now 10 copies per block, slowed down per user request */
+    animation: marquee 60s linear infinite;
 }
 
 .marquee-text {

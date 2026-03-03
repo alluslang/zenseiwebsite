@@ -6,28 +6,7 @@ import './Navbar.css';
 export default function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isNavHovered, setIsNavHovered] = useState(false);
-    const [isNavHidden, setIsNavHidden] = useState(false);
-    const [lastScrollY, setLastScrollY] = useState(0);
     const { t, i18n } = useTranslation();
-
-    useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY;
-
-            // Hide navbar if scrolling down and past the top area (e.g. 50px)
-            if (currentScrollY > lastScrollY && currentScrollY > 50) {
-                setIsNavHidden(true);
-            } else {
-                // Show navbar if scrolling up
-                setIsNavHidden(false);
-            }
-
-            setLastScrollY(currentScrollY);
-        };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [lastScrollY]);
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -39,7 +18,7 @@ export default function Navbar() {
     };
 
     return (
-        <nav className={`navbar-container container ${isNavHidden ? 'nav-hidden' : ''}`}>
+        <nav className="navbar-container container">
             <div
                 className="navbar-pill"
                 onMouseEnter={() => setIsNavHovered(true)}
