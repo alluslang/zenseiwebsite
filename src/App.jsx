@@ -6,6 +6,8 @@ import AboutUs from './components/AboutUs';
 import InstagramFeed from './components/InstagramFeed';
 import Footer from './components/Footer';
 import PromoBanner from './components/PromoBanner';
+import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import './App.css';
 
 function App() {
@@ -36,6 +38,8 @@ function App() {
         <InstagramFeed />
       </main>
       <Footer />
+      <Analytics />
+      <SpeedInsights />
     </>
   );
 }
