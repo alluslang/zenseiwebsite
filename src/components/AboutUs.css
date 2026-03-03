@@ -1,0 +1,247 @@
+.about-section {
+    background: linear-gradient(180deg, #ff8c42 0%, #ea8202 100%);
+    /* Rounded top visually merging with products section if needed */
+    padding: 6rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-header {
+    margin-bottom: 3rem;
+    color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.about-header h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.about-header p {
+    font-size: 1.1rem;
+    font-weight: 500;
+    opacity: 0.9;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.4;
+}
+
+.about-tabs-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    width: 100%;
+    overflow-x: auto;
+    /* Allow scrolling on small screens */
+    scrollbar-width: none;
+}
+
+.about-tabs-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.about-tabs {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.about-tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--color-white);
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.about-tab-btn:hover {
+    color: var(--color-white);
+    transform: scale(1.05);
+}
+
+.about-tab-btn.active {
+    background-color: var(--color-white);
+    color: var(--color-black);
+}
+
+.about-card-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 0 1rem;
+}
+
+.about-card-container {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    height: 550px;
+    border-radius: 2rem;
+    overflow: hidden;
+    /* Use transparent border or subtle shadow if needed, previous box-shadow had issues overlapping */
+}
+
+.about-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-white);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.about-image-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    padding: 1rem;
+    /* Added padding to create distance from card edge */
+}
+
+.about-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 1.5rem;
+    /* Match the curved inner aesthetic */
+}
+
+.about-content {
+    padding: 4rem 3rem 3rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+}
+
+.about-content-inner {
+    margin-bottom: 2rem;
+}
+
+.about-nav-label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-black);
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.about-content h3 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--color-black);
+    line-height: 1.1;
+    margin-bottom: 2rem;
+}
+
+.about-desc {
+    font-size: 1rem;
+    color: var(--color-gray-dark);
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+.about-progress-track-wrapper {
+    position: absolute;
+    bottom: 3rem;
+    right: 3rem;
+    width: calc(50% - 6rem);
+    z-index: 10;
+}
+
+.about-progress-tracks {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.progress-track {
+    flex: 1;
+    height: 3px;
+    background-color: var(--color-gray-light);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.progress-track.completed {
+    background-color: var(--color-primary);
+}
+
+.progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: var(--color-primary);
+    transition: width 0.05s linear;
+}
+
+/* Removed hardcoded fade-in animations as Framer Motion is now in use */
+
+/* Responsiveness */
+@media (max-width: 900px) {
+    .about-card-container {
+        height: 800px;
+    }
+
+    .about-card {
+        grid-template-columns: 1fr;
+        grid-template-rows: 400px 1fr;
+    }
+
+    .about-content {
+        padding: 1.5rem 1rem 2rem 1rem;
+    }
+
+    .about-content h3 {
+        font-size: 2.25rem;
+    }
+
+    .about-header h2 {
+        font-size: 2rem;
+    }
+
+    .about-progress-track-wrapper {
+        width: calc(100% - 2rem);
+        right: 1rem;
+        bottom: 2rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .about-tabs-wrapper {
+        justify-content: flex-start;
+        padding-left: 1.5rem;
+        padding-right: 2rem;
+        /* Fade out the right edge to show scrolling */
+        mask-image: linear-gradient(to right, black 85%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+    }
+
+    .about-tab-btn {
+        font-size: 0.95rem;
+        padding: 0.4rem 1rem;
+    }
+
+    .about-card-container {
+        height: 750px;
+    }
+
+    .about-card {
+        grid-template-rows: 350px 1fr;
+    }
+}

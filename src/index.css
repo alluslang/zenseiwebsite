@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  --color-primary: #C50406;
+  /* The deep premium red from the design */
+  --color-primary-dark: #A30204;
+  --color-white: #FFFFFF;
+  --color-black: #1A1A1A;
+  --color-gray-dark: #333333;
+  --color-gray-light: #F5F5F5;
+
+  --font-primary: 'Exo', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-secondary: 'Exo', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-secondary);
+  background: radial-gradient(circle at 50% 50%, #E61517 0%, var(--color-primary) 60%);
+  color: var(--color-white);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Typography Utility Classes */
+.heading-display {
+  font-family: var(--font-primary);
+  font-weight: 900;
+  font-size: clamp(2.5rem, 4vw + 1rem, 4.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: capitalize;
+  margin-bottom: 1.5rem;
+}
+
+.text-lead {
+  font-family: var(--font-secondary);
+  font-size: clamp(1.125rem, 2vw + 0.5rem, 1.375rem);
+  font-weight: 400;
+  line-height: 1.6;
+  opacity: 0.9;
+  max-width: 500px;
+}
+
+.badge-text {
+  font-family: var(--font-secondary);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* Common Layout Utilities */
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  /* More modern pill shape */
+  font-family: var(--font-secondary);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  border: none;
+  gap: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+
+
+.btn-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  /* Fully rounded icon background */
+  background-color: var(--color-black);
+  color: var(--color-white);
+  transition: transform 0.3s ease;
+}
+
+.btn:hover .btn-icon {
+  transform: translateX(3px);
+}
+
+.btn-primary {
+  background-color: transparent;
+  color: var(--color-white);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.btn-primary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: var(--color-white);
+}
+
+.btn-primary .btn-icon {
+  background-color: var(--color-white);
+  color: var(--color-primary);
+}
+
+.btn-white {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  border: 1px solid var(--color-gray-light);
+}
+
+.btn-white:hover {
+  background-color: #FAFAFA;
+  border-color: var(--color-gray-dark);
+}
+
+.btn-red {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: 1px solid var(--color-primary-dark);
+}
+
+.btn-red:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-red .btn-icon {
+  background-color: var(--color-white);
+  color: var(--color-primary);
+}
+
+.btn-dark {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border: 1px solid var(--color-black);
+}
+
+.btn-dark:hover {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
