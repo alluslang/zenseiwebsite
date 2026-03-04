@@ -17,7 +17,7 @@ export default function HeroCMS() {
         const { data, error } = await supabase
             .from('hero_content')
             .select('*')
-            .eq('is_active', true)
+            .limit(1)
             .single();
 
         if (data && !error) {
@@ -40,12 +40,14 @@ export default function HeroCMS() {
         const { error } = await supabase
             .from('hero_content')
             .update({
+                badge_text_id: content.badge_text_id,
+                badge_text_en: content.badge_text_en,
                 heading_id: content.heading_id,
                 heading_en: content.heading_en,
-                description_id: content.description_id,
-                description_en: content.description_en,
-                primary_cta_id: content.primary_cta_id,
-                primary_cta_en: content.primary_cta_en,
+                subheading_id: content.subheading_id,
+                subheading_en: content.subheading_en,
+                primary_button_text_id: content.primary_button_text_id,
+                primary_button_text_en: content.primary_button_text_en,
                 image_url: content.image_url
             })
             .eq('id', content.id);
@@ -60,7 +62,7 @@ export default function HeroCMS() {
     };
 
     if (loading) return <div>Loading Hero data...</div>;
-    if (!content) return <div>No active hero content found in database.</div>;
+    if (!content) return <div>No hero content found.</div>;
 
     return (
         <div className="cms-page">
@@ -69,6 +71,17 @@ export default function HeroCMS() {
             {message && <div className={`cms-message ${message.includes('Error') ? 'error' : 'success'}`}>{message}</div>}
 
             <form onSubmit={handleSave} className="cms-form">
+                <div className="form-row">
+                    <div className="form-group">
+                        <label>Badge Text (ID)</label>
+                        <input type="text" name="badge_text_id" value={content.badge_text_id || ''} onChange={handleChange} required />
+                    </div>
+                    <div className="form-group">
+                        <label>Badge Text (EN)</label>
+                        <input type="text" name="badge_text_en" value={content.badge_text_en || ''} onChange={handleChange} required />
+                    </div>
+                </div>
+
                 <div className="form-row">
                     <div className="form-group">
                         <label>Heading (ID)</label>
@@ -82,23 +95,23 @@ export default function HeroCMS() {
 
                 <div className="form-row">
                     <div className="form-group">
-                        <label>Description (ID)</label>
-                        <textarea name="description_id" value={content.description_id || ''} onChange={handleChange} rows="3" required />
+                        <label>Subheading (ID)</label>
+                        <textarea name="subheading_id" value={content.subheading_id || ''} onChange={handleChange} rows="3" required />
                     </div>
                     <div className="form-group">
-                        <label>Description (EN)</label>
-                        <textarea name="description_en" value={content.description_en || ''} onChange={handleChange} rows="3" required />
+                        <label>Subheading (EN)</label>
+                        <textarea name="subheading_en" value={content.subheading_en || ''} onChange={handleChange} rows="3" required />
                     </div>
                 </div>
 
                 <div className="form-row">
                     <div className="form-group">
                         <label>Button Text (ID)</label>
-                        <input type="text" name="primary_cta_id" value={content.primary_cta_id || ''} onChange={handleChange} />
+                        <input type="text" name="primary_button_text_id" value={content.primary_button_text_id || ''} onChange={handleChange} />
                     </div>
                     <div className="form-group">
                         <label>Button Text (EN)</label>
-                        <input type="text" name="primary_cta_en" value={content.primary_cta_en || ''} onChange={handleChange} />
+                        <input type="text" name="primary_button_text_en" value={content.primary_button_text_en || ''} onChange={handleChange} />
                     </div>
                 </div>
 

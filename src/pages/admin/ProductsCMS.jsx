@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
-import { Plus, Trash2, Edit2, X } from 'lucide-react';
+import { Plus, Trash2, Edit2 } from 'lucide-react';
 import './CMS.css';
 
 export default function ProductsCMS() {
@@ -22,7 +22,7 @@ export default function ProductsCMS() {
         const { data, error } = await supabase
             .from('products')
             .select('*')
-            .order('id', { ascending: true });
+            .order('sort_order', { ascending: true });
 
         if (data && !error) {
             setProducts(data);
@@ -35,7 +35,9 @@ export default function ProductsCMS() {
             title_id: '', title_en: '',
             description_id: '', description_en: '',
             image_url: '',
-            is_active: true
+            sort_order: products.length + 1,
+            color: '#C50406',
+            rating: 5.0
         });
         setIsEditing(true);
     };
@@ -61,10 +63,10 @@ export default function ProductsCMS() {
     };
 
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
+        const { name, value, type } = e.target;
         setCurrentProduct(prev => ({
             ...prev,
-            [name]: type === 'checkbox' ? checked : value
+            [name]: type === 'number' ? parseFloat(value) : value
         }));
     };
 
@@ -138,18 +140,33 @@ export default function ProductsCMS() {
                         </div>
                     </div>
 
-                    <div className="form-group">
-                        <label>Image URL</label>
-                        <input type="url" name="image_url" value={currentProduct.image_url || ''} onChange={handleChange} required />
-                        {currentProduct.image_url && (
-                            <img src={currentProduct.image_url} alt="Preview" className="cms-image-preview" style={{ maxHeight: '150px' }} />
-                        )}
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label>Color (Hex)</label>
+                            <input type="color" name="color" value={currentProduct.color || '#C50406'} onChange={handleChange} style={{ height: '40px', padding: '0 5px' }} />
+                        </div>
+                        <div className="form-group">
+                            <label>Rating (1.0 - 5.0)</label>
+                            <input type="number" step="0.1" name="rating" value={currentProduct.rating || 5.0} onChange={handleChange} />
+                        </div>
                     </div>
 
-                    <div className="form-group" style={{ flexDirection: 'row', alignItems: 'center', gap: '0.5rem' }}>
-                        <input type="checkbox" id="is_active" name="is_active" checked={currentProduct.is_active} onChange={handleChange} style={{ width: 'auto' }} />
-                        <label htmlFor="is_active" style={{ cursor: 'pointer' }}>Visible on website</label>
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label>Sort Order</label>
+                            <input type="number" name="sort_order" value={currentProduct.sort_order || ''} onChange={handleChange} required />
+                        </div>
+                        <div className="form-group">
+                            <label>Image URL</label>
+                            <input type="url" name="image_url" value={currentProduct.image_url || ''} onChange={handleChange} required />
+                        </div>
                     </div>
+
+                    {currentProduct.image_url && (
+                        <div className="form-group">
+                            <img src={currentProduct.image_url} alt="Preview" className="cms-image-preview" style={{ maxHeight: '150px' }} />
+                        </div>
+                    )}
 
                     <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
                         <button type="submit" disabled={saving} className="cms-btn-primary">
@@ -164,12 +181,12 @@ export default function ProductsCMS() {
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '1.5rem' }}>
                     {products.map(product => (
                         <div key={product.id} style={{ border: '1px solid #eee', borderRadius: '8px', overflow: 'hidden', padding: '1rem' }}>
-                            <div style={{ height: '150px', backgroundColor: '#f9f9f9', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem', borderRadius: '6px', overflow: 'hidden' }}>
+                            <div style={{ height: '150px', backgroundColor: product.color || '#f9f9f9', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem', borderRadius: '6px', overflow: 'hidden' }}>
                                 <img src={product.image_url} alt={product.title_id} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
                             </div>
                             <h4 style={{ margin: '0 0 0.5rem 0' }}>{product.title_id}</h4>
-                            <p style={{ margin: '0 0 1rem 0', fontSize: '0.85rem', color: '#666', opacity: product.is_active ? 1 : 0.5 }}>
-                                {product.is_active ? 'Active' : 'Hidden'}
+                            <p style={{ margin: '0 0 1rem 0', fontSize: '0.85rem', color: '#666' }}>
+                                Order: {product.sort_order} | Rating: {product.rating}
                             </p>
                             <div style={{ display: 'flex', gap: '0.5rem' }}>
                                 <button onClick={() => handleEdit(product)} style={{ flex: 1, padding: '0.5rem', background: '#f0f2f5', border: 'none', borderRadius: '4px', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.3rem' }}>

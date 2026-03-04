@@ -31,8 +31,9 @@ export default function AboutUsCMS() {
 
     const handleAddNew = () => {
         setCurrentSlide({
+            nav_title_id: '', nav_title_en: '',
             heading_id: '', heading_en: '',
-            description_id: '', description_en: '',
+            paragraph_id: '', paragraph_en: '',
             image_url: '',
             order_num: slides.length + 1
         });
@@ -45,13 +46,13 @@ export default function AboutUsCMS() {
     };
 
     const handleDelete = async (id) => {
-        if (!window.confirm('Delete this slide?')) return;
+        if (!window.confirm('Are you sure you want to delete this slide?')) return;
 
         setLoading(true);
         const { error } = await supabase.from('about_slides').delete().eq('id', id);
 
         if (error) {
-            setMessage(`Error: ${error.message}`);
+            setMessage(`Error deleting: ${error.message} `);
         } else {
             setMessage('Slide deleted successfully');
             fetchSlides();
@@ -87,7 +88,7 @@ export default function AboutUsCMS() {
 
         setSaving(false);
         if (error) {
-            setMessage(`Error: ${error.message}`);
+            setMessage(`Error: ${error.message} `);
         } else {
             setMessage('Slide saved successfully!');
             setIsEditing(false);
@@ -96,12 +97,12 @@ export default function AboutUsCMS() {
         }
     };
 
-    if (loading && !isEditing) return <div>Loading about slides...</div>;
+    if (loading && !isEditing) return <div>Loading About Us slides...</div>;
 
     return (
         <div className="cms-page">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '2px solid #f0f2f5', paddingBottom: '0.8rem' }}>
-                <h3 style={{ margin: 0, padding: 0, border: 'none' }}>About Us Slides</h3>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid #f0f2f5', paddingBottom: '0.8rem', marginBottom: '1.5rem' }}>
+                <h3 style={{ borderBottom: 'none', margin: 0, padding: 0 }}>Manage About Us Slides</h3>
                 {!isEditing && (
                     <button onClick={handleAddNew} className="cms-btn-primary" style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', padding: '0.5rem 1rem' }}>
                         <Plus size={18} /> Add Slide
@@ -109,10 +110,21 @@ export default function AboutUsCMS() {
                 )}
             </div>
 
-            {message && <div className={`cms-message ${message.includes('Error') ? 'error' : 'success'}`}>{message}</div>}
+            {message && <div className={`cms - message ${message.includes('Error') ? 'error' : 'success'} `}>{message}</div>}
 
             {isEditing ? (
                 <form onSubmit={handleSave} className="cms-form">
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label>Nav Title (ID)</label>
+                            <input type="text" name="nav_title_id" value={currentSlide.nav_title_id || ''} onChange={handleChange} required />
+                        </div>
+                        <div className="form-group">
+                            <label>Nav Title (EN)</label>
+                            <input type="text" name="nav_title_en" value={currentSlide.nav_title_en || ''} onChange={handleChange} required />
+                        </div>
+                    </div>
+
                     <div className="form-row">
                         <div className="form-group">
                             <label>Heading (ID)</label>
@@ -126,12 +138,12 @@ export default function AboutUsCMS() {
 
                     <div className="form-row">
                         <div className="form-group">
-                            <label>Description (ID)</label>
-                            <textarea name="description_id" value={currentSlide.description_id || ''} onChange={handleChange} rows="4" required />
+                            <label>Paragraph (ID)</label>
+                            <textarea name="paragraph_id" value={currentSlide.paragraph_id || ''} onChange={handleChange} rows="4" required />
                         </div>
                         <div className="form-group">
-                            <label>Description (EN)</label>
-                            <textarea name="description_en" value={currentSlide.description_en || ''} onChange={handleChange} rows="4" required />
+                            <label>Paragraph (EN)</label>
+                            <textarea name="paragraph_en" value={currentSlide.paragraph_en || ''} onChange={handleChange} rows="4" required />
                         </div>
                     </div>
 
@@ -139,15 +151,18 @@ export default function AboutUsCMS() {
                         <div className="form-group">
                             <label>Image URL</label>
                             <input type="url" name="image_url" value={currentSlide.image_url || ''} onChange={handleChange} required />
-                            {currentSlide.image_url && (
-                                <img src={currentSlide.image_url} alt="Preview" className="cms-image-preview" style={{ maxHeight: '150px' }} />
-                            )}
                         </div>
                         <div className="form-group">
                             <label>Order Number</label>
                             <input type="number" name="order_num" value={currentSlide.order_num || ''} onChange={handleChange} required />
                         </div>
                     </div>
+
+                    {currentSlide.image_url && (
+                        <div className="form-group">
+                            <img src={currentSlide.image_url} alt="Preview" className="cms-image-preview" style={{ maxHeight: '150px' }} />
+                        </div>
+                    )}
 
                     <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
                         <button type="submit" disabled={saving} className="cms-btn-primary">
@@ -161,21 +176,26 @@ export default function AboutUsCMS() {
             ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     {slides.map(slide => (
-                        <div key={slide.id} style={{ display: 'flex', gap: '1.5rem', padding: '1.5rem', border: '1px solid #eee', borderRadius: '8px', background: '#fafafa' }}>
-                            <div style={{ width: '150px', flexShrink: 0 }}>
-                                <img src={slide.image_url} alt={slide.heading_id} style={{ width: '100%', height: '100px', objectFit: 'cover', borderRadius: '4px' }} />
+                        <div key={slide.id} style={{ border: '1px solid #eee', borderRadius: '8px', padding: '1rem', display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+                            <div style={{ width: '150px', height: '100px', backgroundColor: '#f9f9f9', borderRadius: '4px', overflow: 'hidden' }}>
+                                <img src={slide.image_url} alt={slide.heading_id} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                             </div>
-                            <div style={{ flexGrow: 1 }}>
-                                <h4 style={{ margin: '0 0 0.5rem 0' }}>{slide.order_num}. {slide.heading_id}</h4>
-                                <p style={{ margin: '0 0 1rem 0', color: '#666', fontSize: '0.9rem' }}>{slide.description_id?.substring(0, 100)}...</p>
-                                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                                    <button onClick={() => handleEdit(slide)} style={{ padding: '0.4rem 0.8rem', background: '#e0e0e0', border: 'none', borderRadius: '4px', cursor: 'pointer', display: 'flex', gap: '0.3rem', alignItems: 'center', fontSize: '0.85rem' }}>
-                                        <Edit2 size={14} /> Edit
-                                    </button>
-                                    <button onClick={() => handleDelete(slide.id)} style={{ padding: '0.4rem 0.8rem', background: '#ffebee', color: '#c62828', border: 'none', borderRadius: '4px', cursor: 'pointer', display: 'flex', gap: '0.3rem', alignItems: 'center', fontSize: '0.85rem' }}>
-                                        <Trash2 size={14} /> Delete
-                                    </button>
-                                </div>
+                            <div style={{ flex: 1 }}>
+                                <h4 style={{ margin: '0 0 0.5rem 0' }}>{slide.nav_title_id} / {slide.nav_title_en}</h4>
+                                <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: '#555' }}>
+                                    {slide.heading_id}
+                                </p>
+                                <p style={{ margin: 0, fontSize: '0.8rem', color: '#888' }}>
+                                    Order: {slide.order_num}
+                                </p>
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', minWidth: '100px' }}>
+                                <button onClick={() => handleEdit(slide)} style={{ padding: '0.5rem', background: '#f0f2f5', border: 'none', borderRadius: '4px', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.3rem' }}>
+                                    <Edit2 size={14} /> Edit
+                                </button>
+                                <button onClick={() => handleDelete(slide.id)} style={{ padding: '0.5rem', background: '#ffebee', color: '#c62828', border: 'none', borderRadius: '4px', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                    <Trash2 size={14} />
+                                </button>
                             </div>
                         </div>
                     ))}

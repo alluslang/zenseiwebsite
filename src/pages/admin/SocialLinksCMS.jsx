@@ -32,7 +32,7 @@ export default function SocialLinksCMS() {
     const handleAddNew = () => {
         setCurrentLink({
             platform_name: '', icon_name: 'Instagram',
-            url: '', username: '', color: '#000000',
+            url: '', color: '#000000',
             order_num: links.length + 1
         });
         setIsEditing(true);
