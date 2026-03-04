@@ -1,51 +1,47 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import PromoBanner from './components/PromoBanner';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Landing from './pages/Landing';
+import Login from './pages/admin/Login';
+import AdminLayout from './layouts/AdminLayout';
+import ProtectedRoute from './components/ProtectedRoute';
 
-const Products = lazy(() => import('./components/Products'));
-const AboutUs = lazy(() => import('./components/AboutUs'));
-const InstagramFeed = lazy(() => import('./components/InstagramFeed'));
-const Footer = lazy(() => import('./components/Footer'));
-import { Analytics } from "@vercel/analytics/react"
-import { SpeedInsights } from "@vercel/speed-insights/react"
+import HeroCMS from './pages/admin/HeroCMS';
+import ProductsCMS from './pages/admin/ProductsCMS';
+import AboutUsCMS from './pages/admin/AboutUsCMS';
+import SocialLinksCMS from './pages/admin/SocialLinksCMS';
+
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import './App.css';
 
+// Minimal Dashboard Placeholder for now
+const Dashboard = () => <div className="cms-page"><h3>Welcome to Zensei Admin</h3><p>Select a module from the left to start editing content.</p></div>;
+
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isBannerVisible, setIsBannerVisible] = useState(true);
-
-  useEffect(() => {
-    // Simulate initial loading time for visual effect (min 2s)
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
-    <>
-      {isLoading && (
-        <div className="fullscreen-loader">
-          <img src="/zlogo_white.svg" alt="Zensei Loading..." className="loader-logo" />
-        </div>
-      )}
-      <PromoBanner isBannerVisible={isBannerVisible} setIsBannerVisible={setIsBannerVisible} />
-      <Navbar />
-      <main>
-        <Hero />
-        <Suspense fallback={null}>
-          <Products />
-          <AboutUs />
-          <InstagramFeed />
-        </Suspense>
-      </main>
-      <Suspense fallback={null}>
-        <Footer />
-      </Suspense>
+    <Router>
+      <Routes>
+        {/* Public Route */}
+        <Route path="/" element={<Landing />} />
+
+        {/* Admin Login */}
+        <Route path="/admin/login" element={<Login />} />
+
+        {/* Protected Admin Routes */}
+        <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
+          <Route index element={<Dashboard />} />
+          <Route path="hero" element={<HeroCMS />} />
+          <Route path="products" element={<ProductsCMS />} />
+          <Route path="about" element={<AboutUsCMS />} />
+          <Route path="social" element={<SocialLinksCMS />} />
+        </Route>
+
+        {/* Placeholder for wildcard/404 */}
+        <Route path="*" element={<Landing />} />
+      </Routes>
       <Analytics />
       <SpeedInsights />
-    </>
+    </Router>
   );
 }
 
