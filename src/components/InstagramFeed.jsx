@@ -28,7 +28,9 @@ const iconMap = {
     'Youtube': (props) => <Youtube {...props} />,
     'MessageCircle': (props) => <MessageCircle {...props} />,
     'Mail': (props) => <Mail {...props} />,
-    'TikTok': (props) => <TikTokIcon {...props} /> // Map 'TikTok' from DB to TikTokIcon
+    'TikTok': (props) => <TikTokIcon {...props} />, // Map 'TikTok' from DB to TikTokIcon
+    'Tiktok': (props) => <TikTokIcon {...props} />, // Map 'Tiktok' from DB to TikTokIcon
+    'tiktok': (props) => <TikTokIcon {...props} />  // Map 'tiktok' from DB to TikTokIcon
 };
 
 export default function InstagramFeed() {
