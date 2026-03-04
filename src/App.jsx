@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Products from './components/Products';
-import AboutUs from './components/AboutUs';
-import InstagramFeed from './components/InstagramFeed';
-import Footer from './components/Footer';
 import PromoBanner from './components/PromoBanner';
+
+const Products = lazy(() => import('./components/Products'));
+const AboutUs = lazy(() => import('./components/AboutUs'));
+const InstagramFeed = lazy(() => import('./components/InstagramFeed'));
+const Footer = lazy(() => import('./components/Footer'));
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import './App.css';
@@ -33,11 +34,15 @@ function App() {
       <Navbar />
       <main>
         <Hero />
-        <Products />
-        <AboutUs />
-        <InstagramFeed />
+        <Suspense fallback={null}>
+          <Products />
+          <AboutUs />
+          <InstagramFeed />
+        </Suspense>
       </main>
-      <Footer />
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
       <Analytics />
       <SpeedInsights />
     </>
