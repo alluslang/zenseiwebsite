@@ -137,6 +137,8 @@ export default function Hero() {
                                 src={content.image_url}
                                 alt="Zensei Hero Product"
                                 className="hero-image"
+                                fetchPriority="high"
+                                decoding="async"
                                 animate={floatAnimation}
                             />
                         </motion.div>

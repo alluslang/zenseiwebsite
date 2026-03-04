@@ -63,6 +63,7 @@ export default function InstagramFeed() {
             const script = document.createElement('script');
             script.src = "https://elfsightcdn.com/platform.js";
             script.async = true;
+            script.defer = true; // Added defer to prevent blocking
             document.body.appendChild(script);
         }
     }, []);

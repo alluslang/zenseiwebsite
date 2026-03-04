@@ -201,7 +201,12 @@ export default function Products() {
                                             <p className="product-desc">{getProductField(product, 'description')}</p>
                                         </div>
                                         <div className="product-image-container">
-                                            <img src={product.image_url || product.image} alt={getProductField(product, 'title')} />
+                                            <img
+                                                src={product.image_url || product.image}
+                                                alt={getProductField(product, 'title')}
+                                                loading="lazy"
+                                                decoding="async"
+                                            />
                                         </div>
                                     </div>
                                 </div>

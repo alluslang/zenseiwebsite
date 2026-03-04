@@ -145,6 +145,8 @@ export default function AboutUs() {
                                         src={activeSlide.image_url}
                                         alt={activeSlide[`heading_${langCode}`]}
                                         className="about-image"
+                                        loading="lazy"
+                                        decoding="async"
                                     />
                                 </div>
 
