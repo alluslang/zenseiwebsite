@@ -4,6 +4,7 @@ import Hero from '../components/Hero';
 import PromoBanner from '../components/PromoBanner';
 
 const Products = lazy(() => import('../components/Products'));
+const PromoSection = lazy(() => import('../components/PromoSection'));
 const AboutUs = lazy(() => import('../components/AboutUs'));
 const InstagramFeed = lazy(() => import('../components/InstagramFeed'));
 const Footer = lazy(() => import('../components/Footer'));
@@ -33,6 +34,7 @@ export default function Landing() {
                 <Hero />
                 <Suspense fallback={null}>
                     <Products />
+                    <PromoSection />
                     <AboutUs />
                     <InstagramFeed />
                 </Suspense>

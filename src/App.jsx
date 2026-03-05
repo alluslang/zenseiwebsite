@@ -11,6 +11,7 @@ import ProductsCMS from './pages/admin/ProductsCMS';
 import AboutUsCMS from './pages/admin/AboutUsCMS';
 import SocialLinksCMS from './pages/admin/SocialLinksCMS';
 import PromoCMS from './pages/admin/PromoCMS';
+import PromoSectionCMS from './pages/admin/PromoSectionCMS';
 import ActionButtonsCMS from './pages/admin/ActionButtonsCMS';
 
 import { Analytics } from "@vercel/analytics/react";
@@ -39,6 +40,7 @@ function App() {
           <Route path="about" element={<AboutUsCMS />} />
           <Route path="social" element={<SocialLinksCMS />} />
           <Route path="promo" element={<PromoCMS />} />
+          <Route path="promo-section" element={<PromoSectionCMS />} />
           <Route path="actions" element={<ActionButtonsCMS />} />
         </Route>
 
