@@ -19,8 +19,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import './App.css';
 
-// Minimal Dashboard Placeholder for now
-const Dashboard = () => <div className="cms-page"><h3>Welcome to Zensei Admin</h3><p>Select a module from the left to start editing content.</p></div>;
+import DashboardCMS from './pages/admin/DashboardCMS';
 
 function App() {
   return (
@@ -35,7 +34,7 @@ function App() {
 
         {/* Protected Admin Routes */}
         <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
-          <Route index element={<Dashboard />} />
+          <Route index element={<DashboardCMS />} />
           <Route path="hero" element={<HeroCMS />} />
           <Route path="products" element={<ProductsCMS />} />
           <Route path="about" element={<AboutUsCMS />} />
