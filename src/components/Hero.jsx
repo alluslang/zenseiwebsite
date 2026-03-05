@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowUpRight, Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useActionButtons } from '../lib/useActionButtons';
+import { supabase } from '../lib/supabase';
 import { useTheme } from '../context/ThemeContext';
 import SectionDivider from './SectionDivider';
 import './Hero.css';
@@ -10,6 +11,7 @@ import './Hero.css';
 export default function Hero() {
     const [content, setContent] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [fetchError, setFetchError] = useState(null);
     const { i18n } = useTranslation();
     const { buttons } = useActionButtons();
     const { themes, getBackgroundStyle } = useTheme();

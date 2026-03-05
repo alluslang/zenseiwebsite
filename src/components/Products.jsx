@@ -3,6 +3,7 @@ import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { useActionButtons } from '../lib/useActionButtons';
+import { supabase } from '../lib/supabase';
 import { useTheme } from '../context/ThemeContext';
 import SectionDivider from './SectionDivider';
 import './Products.css';
