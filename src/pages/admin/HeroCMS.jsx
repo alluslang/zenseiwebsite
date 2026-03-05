@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { supabase } from '../../lib/supabase';
-import './CMS.css'; // Shared CSS for all CMS pages (will create next)
+import ImageUploader from '../../components/admin/ImageUploader';
+import './CMS.css';
 
 export default function HeroCMS() {
     const [content, setContent] = useState(null);
@@ -34,7 +36,8 @@ export default function HeroCMS() {
     const handleSave = async (e) => {
         e.preventDefault();
         setSaving(true);
-        setMessage('');
+
+        const toastId = toast.loading('Saving changes...');
 
         // We update the active row
         const { error } = await supabase
@@ -54,10 +57,9 @@ export default function HeroCMS() {
 
         setSaving(false);
         if (error) {
-            setMessage(`Error: ${error.message}`);
+            toast.error(`Error: ${error.message}`, { id: toastId });
         } else {
-            setMessage('Hero content saved successfully!');
-            setTimeout(() => setMessage(''), 3000);
+            toast.success('Hero content saved successfully!', { id: toastId });
         }
     };
 
@@ -67,8 +69,6 @@ export default function HeroCMS() {
     return (
         <div className="cms-page">
             <h3>Edit Hero Section</h3>
-
-            {message && <div className={`cms-message ${message.includes('Error') ? 'error' : 'success'}`}>{message}</div>}
 
             <form onSubmit={handleSave} className="cms-form">
                 <div className="form-row">
@@ -116,11 +116,12 @@ export default function HeroCMS() {
                 </div>
 
                 <div className="form-group">
-                    <label>Hero Image URL</label>
-                    <input type="url" name="image_url" value={content.image_url || ''} onChange={handleChange} />
-                    {content.image_url && (
-                        <img src={content.image_url} alt="Hero Preview" className="cms-image-preview" />
-                    )}
+                    <label>Hero Image</label>
+                    <ImageUploader
+                        value={content.image_url}
+                        onChange={handleChange}
+                        guideText="Recommended size: 800x800px or larger. You can crop it freely."
+                    />
                 </div>
 
                 <button type="submit" disabled={saving} className="cms-btn-primary">

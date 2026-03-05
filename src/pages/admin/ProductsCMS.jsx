@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { supabase } from '../../lib/supabase';
 import { Plus, Trash2, Edit2 } from 'lucide-react';
+import ImageUploader from '../../components/admin/ImageUploader';
 import './CMS.css';
 
 export default function ProductsCMS() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [message, setMessage] = useState('');
 
     // Modal / Form state
     const [isEditing, setIsEditing] = useState(false);
@@ -51,15 +52,15 @@ export default function ProductsCMS() {
         if (!window.confirm('Are you sure you want to delete this product?')) return;
 
         setLoading(true);
+        const toastId = toast.loading('Deleting product...');
         const { error } = await supabase.from('products').delete().eq('id', id);
 
         if (error) {
-            setMessage(`Error deleting: ${error.message}`);
+            toast.error(`Error deleting: ${error.message}`, { id: toastId });
         } else {
-            setMessage('Product deleted successfully');
+            toast.success('Product deleted successfully', { id: toastId });
             fetchProducts();
         }
-        setTimeout(() => setMessage(''), 3000);
     };
 
     const handleChange = (e) => {
@@ -73,6 +74,8 @@ export default function ProductsCMS() {
     const handleSave = async (e) => {
         e.preventDefault();
         setSaving(true);
+
+        const toastId = toast.loading('Saving product...');
 
         let error;
         if (currentProduct.id) {
@@ -92,12 +95,11 @@ export default function ProductsCMS() {
 
         setSaving(false);
         if (error) {
-            setMessage(`Error: ${error.message}`);
+            toast.error(`Error: ${error.message}`, { id: toastId });
         } else {
-            setMessage('Product saved successfully!');
+            toast.success('Product saved successfully!', { id: toastId });
             setIsEditing(false);
             fetchProducts();
-            setTimeout(() => setMessage(''), 3000);
         }
     };
 
@@ -113,8 +115,6 @@ export default function ProductsCMS() {
                     </button>
                 )}
             </div>
-
-            {message && <div className={`cms-message ${message.includes('Error') ? 'error' : 'success'}`}>{message}</div>}
 
             {isEditing ? (
                 <form onSubmit={handleSave} className="cms-form">
@@ -157,16 +157,15 @@ export default function ProductsCMS() {
                             <input type="number" name="sort_order" value={currentProduct.sort_order || ''} onChange={handleChange} required />
                         </div>
                         <div className="form-group">
-                            <label>Image URL</label>
-                            <input type="url" name="image_url" value={currentProduct.image_url || ''} onChange={handleChange} required />
+                            <label>Product Image</label>
+                            <ImageUploader
+                                value={currentProduct.image_url}
+                                onChange={handleChange}
+                                aspect={1}
+                                guideText="Recommended: 1:1 Aspect ratio, transparent PNG."
+                            />
                         </div>
                     </div>
-
-                    {currentProduct.image_url && (
-                        <div className="form-group">
-                            <img src={currentProduct.image_url} alt="Preview" className="cms-image-preview" style={{ maxHeight: '150px' }} />
-                        </div>
-                    )}
 
                     <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
                         <button type="submit" disabled={saving} className="cms-btn-primary">

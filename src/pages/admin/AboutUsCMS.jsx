@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { supabase } from '../../lib/supabase';
 import { Plus, Trash2, Edit2 } from 'lucide-react';
+import ImageUploader from '../../components/admin/ImageUploader';
 import './CMS.css';
 
 export default function AboutUsCMS() {
     const [slides, setSlides] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [message, setMessage] = useState('');
 
     const [isEditing, setIsEditing] = useState(false);
     const [currentSlide, setCurrentSlide] = useState(null);
@@ -49,15 +50,15 @@ export default function AboutUsCMS() {
         if (!window.confirm('Are you sure you want to delete this slide?')) return;
 
         setLoading(true);
+        const toastId = toast.loading('Deleting slide...');
         const { error } = await supabase.from('about_slides').delete().eq('id', id);
 
         if (error) {
-            setMessage(`Error deleting: ${error.message} `);
+            toast.error(`Error deleting: ${error.message}`, { id: toastId });
         } else {
-            setMessage('Slide deleted successfully');
+            toast.success('Slide deleted successfully', { id: toastId });
             fetchSlides();
         }
-        setTimeout(() => setMessage(''), 3000);
     };
 
     const handleChange = (e) => {
@@ -68,9 +69,18 @@ export default function AboutUsCMS() {
         }));
     };
 
+    const handleImageUpload = (url) => {
+        setCurrentSlide(prev => ({
+            ...prev,
+            image_url: url
+        }));
+    };
+
     const handleSave = async (e) => {
         e.preventDefault();
         setSaving(true);
+
+        const toastId = toast.loading('Saving slide...');
 
         let error;
         if (currentSlide.id) {
@@ -88,12 +98,11 @@ export default function AboutUsCMS() {
 
         setSaving(false);
         if (error) {
-            setMessage(`Error: ${error.message} `);
+            toast.error(`Error: ${error.message}`, { id: toastId });
         } else {
-            setMessage('Slide saved successfully!');
+            toast.success('Slide saved successfully!', { id: toastId });
             setIsEditing(false);
             fetchSlides();
-            setTimeout(() => setMessage(''), 3000);
         }
     };
 
@@ -105,12 +114,10 @@ export default function AboutUsCMS() {
                 <h3 style={{ borderBottom: 'none', margin: 0, padding: 0 }}>Manage About Us Slides</h3>
                 {!isEditing && (
                     <button onClick={handleAddNew} className="cms-btn-primary" style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', padding: '0.5rem 1rem' }}>
-                        <Plus size={18} /> Add Slide
+                        <Plus size={18} /> Add New
                     </button>
                 )}
             </div>
-
-            {message && <div className={`cms - message ${message.includes('Error') ? 'error' : 'success'} `}>{message}</div>}
 
             {isEditing ? (
                 <form onSubmit={handleSave} className="cms-form">
@@ -149,20 +156,24 @@ export default function AboutUsCMS() {
 
                     <div className="form-row">
                         <div className="form-group">
-                            <label>Image URL</label>
-                            <input type="url" name="image_url" value={currentSlide.image_url || ''} onChange={handleChange} required />
+                            <label>Background Subcolor (Hex)</label>
+                            <input type="color" name="bg_subcolor" value={currentSlide.bg_subcolor || '#f7f4ed'} onChange={handleChange} style={{ height: '40px', padding: '0 5px' }} />
                         </div>
                         <div className="form-group">
-                            <label>Order Number</label>
-                            <input type="number" name="order_num" value={currentSlide.order_num || ''} onChange={handleChange} required />
+                            <label>Sort Order</label>
+                            <input type="number" name="sort_order" value={currentSlide.sort_order || ''} onChange={handleChange} required />
                         </div>
                     </div>
 
-                    {currentSlide.image_url && (
-                        <div className="form-group">
-                            <img src={currentSlide.image_url} alt="Preview" className="cms-image-preview" style={{ maxHeight: '150px' }} />
-                        </div>
-                    )}
+                    <div className="form-group">
+                        <label>Slide Image</label>
+                        <ImageUploader
+                            value={currentSlide.image_url}
+                            onChange={handleImageUpload}
+                            aspect={16 / 9}
+                            guideText="Recommended: 16:9 Aspect ratio (Horizontal)."
+                        />
+                    </div>
 
                     <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
                         <button type="submit" disabled={saving} className="cms-btn-primary">

@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import Landing from './pages/Landing';
 import Login from './pages/admin/Login';
 import AdminLayout from './layouts/AdminLayout';
@@ -9,6 +10,8 @@ import HeroCMS from './pages/admin/HeroCMS';
 import ProductsCMS from './pages/admin/ProductsCMS';
 import AboutUsCMS from './pages/admin/AboutUsCMS';
 import SocialLinksCMS from './pages/admin/SocialLinksCMS';
+import PromoCMS from './pages/admin/PromoCMS';
+import ActionButtonsCMS from './pages/admin/ActionButtonsCMS';
 
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
@@ -20,6 +23,7 @@ const Dashboard = () => <div className="cms-page"><h3>Welcome to Zensei Admin</h
 function App() {
   return (
     <Router>
+      <Toaster position="top-right" />
       <Routes>
         {/* Public Route */}
         <Route path="/" element={<Landing />} />
@@ -34,6 +38,8 @@ function App() {
           <Route path="products" element={<ProductsCMS />} />
           <Route path="about" element={<AboutUsCMS />} />
           <Route path="social" element={<SocialLinksCMS />} />
+          <Route path="promo" element={<PromoCMS />} />
+          <Route path="actions" element={<ActionButtonsCMS />} />
         </Route>
 
         {/* Placeholder for wildcard/404 */}
