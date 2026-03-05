@@ -132,7 +132,7 @@ export default function ThemeSettingsCMS() {
                             <label>Navbar Desktop Logo</label>
                             <ImageUploader
                                 value={logos.navbar_desktop}
-                                onChange={(url) => handleLogoUpload('navbar_desktop', url)}
+                                onChange={(e) => handleLogoUpload('navbar_desktop', e.target.value)}
                                 aspect={16 / 9} // General landscape for logos, can use free
                                 objectFit="contain"
                                 guideText="Recommended: Transparent PNG or SVG. Horizontal layout."
@@ -142,7 +142,7 @@ export default function ThemeSettingsCMS() {
                             <label>Navbar Mobile Logo</label>
                             <ImageUploader
                                 value={logos.navbar_mobile}
-                                onChange={(url) => handleLogoUpload('navbar_mobile', url)}
+                                onChange={(e) => handleLogoUpload('navbar_mobile', e.target.value)}
                                 aspect={1 / 1}
                                 objectFit="contain"
                                 guideText="Recommended: Square or short aspect ratio."
@@ -152,7 +152,7 @@ export default function ThemeSettingsCMS() {
                             <label>Footer Logo</label>
                             <ImageUploader
                                 value={logos.footer}
-                                onChange={(url) => handleLogoUpload('footer', url)}
+                                onChange={(e) => handleLogoUpload('footer', e.target.value)}
                                 aspect={16 / 9}
                                 objectFit="contain"
                                 guideText="Recommended: White/Light transparent PNG or SVG for dark footers."
@@ -227,7 +227,7 @@ export default function ThemeSettingsCMS() {
                                         <label>Upload Background Image</label>
                                         <ImageUploader
                                             value={currentTheme.image_url}
-                                            onChange={(url) => handleThemeChange('image_url', url)}
+                                            onChange={(e) => handleThemeChange('image_url', e.target.value)}
                                             aspect={undefined} // Free or unconstrained for backgrounds
                                             guideText="Recommended: High Resolution background image."
                                         />

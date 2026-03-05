@@ -94,12 +94,52 @@ export default function ImageUploader({ value, onChange, aspect, guideText, obje
     const onFileChange = async (e) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
-            setImageType(file.type || 'image/jpeg');
+            const fileType = file.type || 'image/jpeg';
+            setImageType(fileType);
+
+            if (fileType === 'image/svg+xml') {
+                // SVGs should not be cropped or compressed as it ruins vector quality. Upload directly.
+                await uploadDirectly(file);
+                e.target.value = '';
+                return;
+            }
+
             let imageDataUrl = await readFile(file);
             setImageSrc(imageDataUrl);
+            setZoom(1); // reset zoom
             setIsModalOpen(true);
             // Reset input value so same file can be selected again if needed
             e.target.value = '';
+        }
+    };
+
+    const uploadDirectly = async (file) => {
+        setIsProcessing(true);
+        const toastId = toast.loading('Uploading SVG directly...');
+        try {
+            const fileName = `${Math.random().toString(36).substring(2, 15)}_${Date.now()}.svg`;
+            const filePath = `uploads/${fileName}`;
+
+            const { data, error } = await supabase.storage
+                .from('Zensei')
+                .upload(filePath, file, {
+                    cacheControl: '3600',
+                    upsert: false
+                });
+
+            if (error) throw error;
+
+            const { data: { publicUrl } } = supabase.storage
+                .from('Zensei')
+                .getPublicUrl(filePath);
+
+            onChange({ target: { name: 'image_url', value: publicUrl } });
+            toast.success('SVG uploaded successfully!', { id: toastId });
+        } catch (error) {
+            console.error(error);
+            toast.error(`SVG Upload failed: ${error.message}`, { id: toastId });
+        } finally {
+            setIsProcessing(false);
         }
     };
 
@@ -234,6 +274,8 @@ export default function ImageUploader({ value, onChange, aspect, guideText, obje
                                 image={imageSrc}
                                 crop={crop}
                                 zoom={zoom}
+                                minZoom={0.1}
+                                restrictPosition={false}
                                 aspect={aspect} // if undefined, it allows free cropping
                                 objectFit={objectFit}
                                 onCropChange={setCrop}
@@ -248,9 +290,9 @@ export default function ImageUploader({ value, onChange, aspect, guideText, obje
                                 <input
                                     type="range"
                                     value={zoom}
-                                    min={1}
+                                    min={0.1}
                                     max={3}
-                                    step={0.1}
+                                    step={0.05}
                                     aria-labelledby="Zoom"
                                     onChange={(e) => setZoom(e.target.value)}
                                     disabled={isProcessing}
