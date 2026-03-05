@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Instagram, Youtube, Mail, MessageCircle, Music } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { useTheme } from '../context/ThemeContext';
+import SectionDivider from './SectionDivider';
 import './InstagramFeed.css';
 
 // TikTok doesn't have a standard icon in lucide-react, using a custom SVG for it
@@ -36,6 +38,7 @@ const iconMap = {
 export default function InstagramFeed() {
     const { t } = useTranslation();
     const [socialLinks, setSocialLinks] = useState([]);
+    const { themes, getBackgroundStyle } = useTheme();
 
     useEffect(() => {
         // Fetch CMS Social Links
@@ -69,7 +72,7 @@ export default function InstagramFeed() {
     }, []);
 
     return (
-        <section className="instagram-section" id="instagram">
+        <section className="instagram-section" id="instagram" style={{ position: 'relative', ...getBackgroundStyle(themes.instagram) }}>
             <div className="container">
                 <motion.div
                     className="instagram-header"
@@ -135,6 +138,13 @@ export default function InstagramFeed() {
                     )}
                 </motion.div>
             </div>
+
+            {/* Dynamic Section Divider */}
+            {themes.instagram?.show_divider && (
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
+                    <SectionDivider color={themes.instagram?.divider_color || themes.footer?.color || '#2d3748'} shape={themes.instagram?.divider_shape || 'wave'} />
+                </div>
+            )}
         </section>
     );
 }

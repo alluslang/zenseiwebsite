@@ -17,6 +17,7 @@ export default function ThemeSettingsCMS() {
         products: { type: 'solid', color: '#ffffff', show_divider: false },
         promo: { type: 'solid', color: '#fcfbf9', show_divider: false },
         about: { type: 'solid', color: '#ffffff', show_divider: false },
+        instagram: { type: 'solid', color: '#fcfbf9', show_divider: false },
         footer: { type: 'solid', color: '#2d3748', show_divider: false },
     });
 
@@ -174,6 +175,7 @@ export default function ThemeSettingsCMS() {
                                 <option value="products">Products Section</option>
                                 <option value="promo">Promo Section (Dynamic Promo)</option>
                                 <option value="about">About Us Section</option>
+                                <option value="instagram">Instagram Feed Section</option>
                                 <option value="footer">Footer Section</option>
                             </select>
                         </div>

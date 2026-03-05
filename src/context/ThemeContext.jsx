@@ -19,6 +19,7 @@ export const ThemeProvider = ({ children }) => {
         products: {},
         promo: {},
         about: {},
+        instagram: {},
         footer: {}
     });
 
