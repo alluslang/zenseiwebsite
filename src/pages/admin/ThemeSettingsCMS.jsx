@@ -128,6 +128,7 @@ export default function ThemeSettingsCMS() {
                                 value={logos.navbar_desktop}
                                 onChange={(url) => handleLogoUpload('navbar_desktop', url)}
                                 aspect={16 / 9} // General landscape for logos, can use free
+                                objectFit="contain"
                                 guideText="Recommended: Transparent PNG or SVG. Horizontal layout."
                             />
                         </div>
@@ -137,6 +138,7 @@ export default function ThemeSettingsCMS() {
                                 value={logos.navbar_mobile}
                                 onChange={(url) => handleLogoUpload('navbar_mobile', url)}
                                 aspect={1 / 1}
+                                objectFit="contain"
                                 guideText="Recommended: Square or short aspect ratio."
                             />
                         </div>
@@ -146,6 +148,7 @@ export default function ThemeSettingsCMS() {
                                 value={logos.footer}
                                 onChange={(url) => handleLogoUpload('footer', url)}
                                 aspect={16 / 9}
+                                objectFit="contain"
                                 guideText="Recommended: White/Light transparent PNG or SVG for dark footers."
                             />
                         </div>

@@ -17,7 +17,7 @@ const createImage = (url) =>
     });
 
 // Helper function to get cropped image 
-async function getCroppedImg(imageSrc, pixelCrop) {
+async function getCroppedImg(imageSrc, pixelCrop, imageType = 'image/jpeg') {
     const image = await createImage(imageSrc);
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
@@ -66,7 +66,7 @@ async function getCroppedImg(imageSrc, pixelCrop) {
     return new Promise((resolve, reject) => {
         croppedCanvas.toBlob((file) => {
             resolve(file);
-        }, 'image/jpeg');
+        }, imageType, 1.0);
     });
 }
 
@@ -77,11 +77,11 @@ async function getCroppedImg(imageSrc, pixelCrop) {
  * @param {string} value The current image_url value
  * @param {function} onChange Callback when an image is successfully uploaded (returns URL)
  * @param {number} aspect The aspect ratio for cropping (e.g., 1 for 1:1, 16/9 for 16:9). 
- *                        Pass undefined for free crop.
- * @param {string} guideText Helper text to display.
+ * @param {string} objectFit How the image should fit the crop area ('cover', 'contain', etc)
  */
-export default function ImageUploader({ value, onChange, aspect, guideText }) {
+export default function ImageUploader({ value, onChange, aspect, guideText, objectFit = 'cover' }) {
     const [imageSrc, setImageSrc] = useState(null);
+    const [imageType, setImageType] = useState('image/jpeg');
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
@@ -94,6 +94,7 @@ export default function ImageUploader({ value, onChange, aspect, guideText }) {
     const onFileChange = async (e) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
+            setImageType(file.type || 'image/jpeg');
             let imageDataUrl = await readFile(file);
             setImageSrc(imageDataUrl);
             setIsModalOpen(true);
@@ -122,21 +123,23 @@ export default function ImageUploader({ value, onChange, aspect, guideText }) {
 
         try {
             // 1. Get cropped image blob
-            const croppedImageBlob = await getCroppedImg(imageSrc, croppedAreaPixels);
+            const croppedImageBlob = await getCroppedImg(imageSrc, croppedAreaPixels, imageType);
 
             // 2. Compress image
             toast.loading('Compressing image...', { id: toastId });
             const compressionOptions = {
                 maxSizeMB: 0.5, // 500KB max
                 maxWidthOrHeight: 1920,
-                useWebWorker: true
+                useWebWorker: true,
+                alwaysKeepResolution: true, // Try to maintain logo details
+                fileType: imageType // Keep PNG as PNG
             };
 
-            const compressedFile = await imageCompression(new File([croppedImageBlob], 'image.jpg', { type: 'image/jpeg' }), compressionOptions);
+            const compressedFile = await imageCompression(new File([croppedImageBlob], `image.${imageType.split('/')[1] || 'jpg'}`, { type: imageType }), compressionOptions);
 
             // 3. Upload to Supabase Zensei bucket
             toast.loading('Uploading to server...', { id: toastId });
-            const fileExt = 'jpg';
+            const fileExt = imageType === 'image/png' ? 'png' : imageType === 'image/webp' ? 'webp' : 'jpg';
             const fileName = `${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
             const filePath = `uploads/${fileName}`;
 
@@ -232,6 +235,7 @@ export default function ImageUploader({ value, onChange, aspect, guideText }) {
                                 crop={crop}
                                 zoom={zoom}
                                 aspect={aspect} // if undefined, it allows free cropping
+                                objectFit={objectFit}
                                 onCropChange={setCrop}
                                 onCropComplete={onCropComplete}
                                 onZoomChange={setZoom}
