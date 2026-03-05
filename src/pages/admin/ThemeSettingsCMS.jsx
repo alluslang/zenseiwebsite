@@ -265,9 +265,25 @@ export default function ThemeSettingsCMS() {
                                     style={{ width: '20px', height: '20px', cursor: 'pointer' }}
                                 />
                                 <label htmlFor="show_divider" style={{ margin: 0, cursor: 'pointer', fontWeight: 'bold', color: '#2e7d32' }}>
-                                    Aktifkan Section Divider (Pembatas Bergelombang di Bawah Seksi)
+                                    Aktifkan Section Divider (Pembatas di Bawah Seksi)
                                 </label>
                             </div>
+
+                            {currentTheme.show_divider && (
+                                <div className="form-group" style={{ marginTop: '1rem', marginLeft: '1rem' }}>
+                                    <label>Bentuk Divider (Divider Shape)</label>
+                                    <select
+                                        value={currentTheme.divider_shape || 'wave'}
+                                        onChange={(e) => handleThemeChange('divider_shape', e.target.value)}
+                                        style={{ padding: '0.8rem', width: '100%', borderRadius: '4px', border: '1px solid #ddd' }}
+                                    >
+                                        <option value="wave">Wave (Gelombang)</option>
+                                        <option value="curve-up">Curve Up (Melengkung naik)</option>
+                                        <option value="curve-down">Curve Down (Melengkung turun)</option>
+                                        <option value="triangle">Triangle (Segitiga)</option>
+                                    </select>
+                                </div>
+                            )}
                         </div>
                     </div>
                 )}

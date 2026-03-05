@@ -152,7 +152,7 @@ export default function Hero() {
             {/* Dynamic Section Divider */}
             {themes.hero?.show_divider && (
                 <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
-                    <SectionDivider color={themes.products?.color || '#ffffff'} />
+                    <SectionDivider color={themes.products?.color || '#ffffff'} shape={themes.hero?.divider_shape || 'wave'} />
                 </div>
             )}
         </section>

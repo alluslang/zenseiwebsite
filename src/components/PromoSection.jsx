@@ -78,7 +78,7 @@ export default function PromoSection() {
             {/* Dynamic Section Divider */}
             {themes.promo?.show_divider && (
                 <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
-                    <SectionDivider color={themes.about?.color || '#ffffff'} />
+                    <SectionDivider color={themes.about?.color || '#ffffff'} shape={themes.promo?.divider_shape || 'wave'} />
                 </div>
             )}
         </section>
