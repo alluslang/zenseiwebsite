@@ -10,6 +10,7 @@ import './AboutUs.css';
 export default function AboutUs() {
     const { t, i18n } = useTranslation();
     const [slides, setSlides] = useState([]);
+    const [activeIndex, setActiveIndex] = useState(0);
     const [loading, setLoading] = useState(true);
     const [progress, setProgress] = useState(0);
     const [isPlaying, setIsPlaying] = useState(true);
