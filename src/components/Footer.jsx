@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { useTheme } from '../context/ThemeContext';
 import './Footer.css';
 
 export default function Footer() {
@@ -14,6 +15,8 @@ export default function Footer() {
         phone: '+62 812-3456-7890',
         email: 'hello@zensei.co.id'
     });
+
+    const { logos, themes, getBackgroundStyle } = useTheme();
 
     useEffect(() => {
         const fetchFooterData = async () => {
@@ -38,12 +41,12 @@ export default function Footer() {
     const currentLang = i18n.language; // 'id' or 'en'
 
     return (
-        <footer className="footer-section">
+        <footer className="footer-section" style={{ position: 'relative', ...getBackgroundStyle(themes.footer) }}>
             <div className="container">
                 <div className="footer-grid">
                     {/* Brand Column */}
                     <div className="footer-brand">
-                        <img src="/zenseired.svg" alt="Zensei Logo" className="footer-logo" />
+                        <img src={logos?.footer || "/zlogo_dark.svg"} alt="Zensei Logo" className="footer-logo" />
                         <p className="footer-desc">
                             {currentLang === 'en' && footerData.description_en ? footerData.description_en : footerData.description}
                         </p>

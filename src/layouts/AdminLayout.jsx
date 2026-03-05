@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LayoutDashboard, Image as ImageIcon, ShoppingBag, Info, Link as LinkIcon, LogOut, Bell, MousePointerClick, Ticket } from 'lucide-react';
+import { LayoutDashboard, Image as ImageIcon, ShoppingBag, Info, Link as LinkIcon, LogOut, Bell, MousePointerClick, Ticket, Palette } from 'lucide-react';
 import './AdminLayout.css';
 
 export default function AdminLayout() {
@@ -23,6 +23,7 @@ export default function AdminLayout() {
         { path: '/admin/promo', label: 'Promo Banner', icon: <Bell size={20} /> },
         { path: '/admin/promo-section', label: 'Promo Section', icon: <Ticket size={20} /> },
         { path: '/admin/actions', label: 'Action Buttons', icon: <MousePointerClick size={20} /> },
+        { path: '/admin/theme', label: 'Theme & Logos', icon: <Palette size={20} /> },
     ];
 
     return (

@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { supabase } from '../lib/supabase';
 import { useActionButtons } from '../lib/useActionButtons';
+import { useTheme } from '../context/ThemeContext';
+import SectionDivider from './SectionDivider';
 import './Hero.css';
 
 export default function Hero() {
     const [content, setContent] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [fetchError, setFetchError] = useState(null);
     const { i18n } = useTranslation();
     const { buttons } = useActionButtons();
+    const { themes, getBackgroundStyle } = useTheme();
 
     // Helper to get the correct column based on active language (e.g., 'en' or 'id')
     const getLocalizedField = (fieldName) => {
@@ -42,7 +43,7 @@ export default function Hero() {
 
     if (loading) {
         return (
-            <section className="hero-section" style={{ backgroundColor: 'var(--color-primary)' }}>
+            <section className="hero-section" style={{ ...getBackgroundStyle(themes.hero), backgroundColor: themes.hero?.color || 'var(--color-primary)' }}>
                 <div className="hero-loading">
                     <img src="/zlogo_white.svg" alt="Loading Zensei..." className="loading-logo" />
                 </div>
@@ -85,7 +86,7 @@ export default function Hero() {
     };
 
     return (
-        <section className="hero-section">
+        <section className="hero-section" style={getBackgroundStyle(themes.hero)}>
             <div className="container">
                 <div className="hero-grid">
 
@@ -146,12 +147,12 @@ export default function Hero() {
                 </div>
             </div>
 
-            {/* Convex Curved Arc Divider matching new image mockup */}
-            <div className="hero-curve-divider">
-                <svg viewBox="0 0 1440 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0,200 L0,100 Q720,0 1440,100 L1440,200 Z" className="shape-fill" />
-                </svg>
-            </div>
+            {/* Dynamic Section Divider */}
+            {themes.hero?.show_divider && (
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
+                    <SectionDivider color={themes.products?.color || '#ffffff'} />
+                </div>
+            )}
         </section>
     );
 }

@@ -2,8 +2,9 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { supabase } from '../lib/supabase';
 import { useActionButtons } from '../lib/useActionButtons';
+import { useTheme } from '../context/ThemeContext';
+import SectionDivider from './SectionDivider';
 import './Products.css';
 
 const products = [
@@ -52,6 +53,7 @@ const products = [
 export default function Products() {
     const { t, i18n } = useTranslation();
     const { buttons } = useActionButtons();
+    const { themes, getBackgroundStyle } = useTheme();
     const scrollContainerRef = useRef(null);
     const [headerData, setHeaderData] = useState(null);
     const [productsData, setProductsData] = useState([]);
@@ -155,7 +157,7 @@ export default function Products() {
     };
 
     return (
-        <section className="products-section" id="product">
+        <section className="products-section" id="product" style={{ position: 'relative', ...getBackgroundStyle(themes.products) }}>
             <div className="container">
                 <motion.div
                     className="products-header"
@@ -254,12 +256,14 @@ export default function Products() {
                 </div>
             </motion.div>
 
-            {/* Shape Divider Transition to next section */}
-            <div className="products-curve-divider">
-                <svg viewBox="0 0 1440 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0,200 L0,100 Q720,0 1440,100 L1440,200 Z" fill="#ff9b59" className="shape-fill" />
-                </svg>
-            </div>
-        </section>
+            {/* Dynamic Section Divider */}
+            {
+                themes.products?.show_divider && (
+                    <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
+                        <SectionDivider color={themes.promo?.color || '#fcfbf9'} />
+                    </div>
+                )
+            }
+        </section >
     );
 }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ChevronRight, Menu, X, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useActionButtons } from '../lib/useActionButtons';
+import { useTheme } from '../context/ThemeContext';
 import './Navbar.css';
 
 export default function Navbar() {
@@ -9,6 +10,7 @@ export default function Navbar() {
     const [isNavHovered, setIsNavHovered] = useState(false);
     const { t, i18n } = useTranslation();
     const { buttons } = useActionButtons();
+    const { logos } = useTheme();
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -34,10 +36,16 @@ export default function Navbar() {
                 </div>
 
                 <div className="nav-logo">
+                    {/* Desktop Logo mapping, fallbacks handles by Context defaults */}
                     <img
-                        src={isNavHovered ? "/zenseired.svg" : "/zenseired.svg"}
+                        src={logos?.navbar_desktop || "/zlogo_white.svg"}
                         alt="Zensei Logo"
-                        className="logo-image"
+                        className="logo-image desktop-logo"
+                    />
+                    <img
+                        src={logos?.navbar_mobile || "/zshort_white.svg"}
+                        alt="Zensei Logo"
+                        className="logo-image mobile-logo"
                     />
                 </div>
 

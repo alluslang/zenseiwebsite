@@ -181,7 +181,46 @@ body.has-promo-banner .navbar-container {
     }
 
     .navbar-pill {
-        padding: 1rem 1.5rem;
+        margin-top: 1rem;
+        padding: 0.5rem 1.5rem;
+        background-color: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+
+    .logo-image {
+        height: auto;
+        max-height: 40px;
+        /* adjusted slightly for consistency */
+        max-width: 140px;
+        object-fit: contain;
+    }
+
+    .desktop-logo {
+        display: block;
+    }
+
+    .mobile-logo {
+        display: none;
+    }
+
+    @media (max-width: 768px) {
+        .desktop-logo {
+            display: none;
+        }
+
+        .mobile-logo {
+            display: block;
+        }
+    }
+
+    .navbar-pill {
         width: 90%;
         /* constraint on mobile to avoid touching horizontal edges */
         /* Increased height */

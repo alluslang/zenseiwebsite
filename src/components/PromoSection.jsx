@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
 import { motion } from 'framer-motion';
+import { useTheme } from '../context/ThemeContext';
+import SectionDivider from './SectionDivider';
 import './PromoSection.css';
 
 export default function PromoSection() {
-    const { i18n } = useTranslation();
     const [promo, setPromo] = useState(null);
     const [loading, setLoading] = useState(true);
+    const { themes, getBackgroundStyle } = useTheme();
 
     useEffect(() => {
         const fetchPromo = async () => {
@@ -38,7 +40,7 @@ export default function PromoSection() {
     const buttonText = promo[`button_text_${langCode}`];
 
     return (
-        <section className="promo-section-block">
+        <section className="promo-section-block" style={{ position: 'relative', ...getBackgroundStyle(themes.promo) }}>
             <div className="container promo-section-container">
                 <motion.div
                     className="promo-image-wrapper"
@@ -72,6 +74,13 @@ export default function PromoSection() {
                     )}
                 </motion.div>
             </div>
+
+            {/* Dynamic Section Divider */}
+            {themes.promo?.show_divider && (
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
+                    <SectionDivider color={themes.about?.color || '#ffffff'} />
+                </div>
+            )}
         </section>
     );
 }

@@ -13,6 +13,7 @@ import SocialLinksCMS from './pages/admin/SocialLinksCMS';
 import PromoCMS from './pages/admin/PromoCMS';
 import PromoSectionCMS from './pages/admin/PromoSectionCMS';
 import ActionButtonsCMS from './pages/admin/ActionButtonsCMS';
+import ThemeSettingsCMS from './pages/admin/ThemeSettingsCMS';
 
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
@@ -42,6 +43,7 @@ function App() {
           <Route path="promo" element={<PromoCMS />} />
           <Route path="promo-section" element={<PromoSectionCMS />} />
           <Route path="actions" element={<ActionButtonsCMS />} />
+          <Route path="theme" element={<ThemeSettingsCMS />} />
         </Route>
 
         {/* Placeholder for wildcard/404 */}

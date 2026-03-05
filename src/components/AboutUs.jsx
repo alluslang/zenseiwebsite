@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Pause } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { useTheme } from '../context/ThemeContext';
+import SectionDivider from './SectionDivider';
 import './AboutUs.css';
 
 export default function AboutUs() {
     const { t, i18n } = useTranslation();
     const [slides, setSlides] = useState([]);
-    const [activeIndex, setActiveIndex] = useState(0);
     const [loading, setLoading] = useState(true);
     const [progress, setProgress] = useState(0);
     const [isPlaying, setIsPlaying] = useState(true);
+    const { themes, getBackgroundStyle } = useTheme();
 
     const [isFirstRender, setIsFirstRender] = useState(true);
 
@@ -81,7 +82,7 @@ export default function AboutUs() {
     const activeSlide = slides[activeIndex];
 
     return (
-        <section className="about-section" id="about">
+        <section className="about-section" id="about" style={{ position: 'relative', ...getBackgroundStyle(themes.about) }}>
             <div className="container about-container">
                 {/* Header text */}
                 <motion.div
@@ -197,6 +198,13 @@ export default function AboutUs() {
                     </div>
                 </motion.div>
             </div>
+
+            {/* Dynamic Section Divider */}
+            {themes.about?.show_divider && (
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
+                    <SectionDivider color={themes.footer?.color || '#2d3748'} />
+                </div>
+            )}
         </section>
     );
 }
