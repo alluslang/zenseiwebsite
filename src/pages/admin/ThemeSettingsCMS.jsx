@@ -198,7 +198,10 @@ export default function ThemeSettingsCMS() {
                             {currentTheme.type === 'solid' && (
                                 <div className="form-group">
                                     <label>Warna Solid (Hex / RGB)</label>
-                                    <input type="text" value={currentTheme.color || ''} onChange={(e) => handleThemeChange('color', e.target.value)} placeholder="#ffffff atau rgb(255,255,255)" />
+                                    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                                        <input type="color" value={currentTheme.color || '#ffffff'} onChange={(e) => handleThemeChange('color', e.target.value)} style={{ width: '40px', height: '40px', padding: 0, border: 'none', borderRadius: '4px', cursor: 'pointer' }} />
+                                        <input type="text" value={currentTheme.color || ''} onChange={(e) => handleThemeChange('color', e.target.value)} placeholder="#ffffff atau rgb(255,255,255)" style={{ flex: 1, padding: '0.8rem', borderRadius: '4px', border: '1px solid #ddd' }} />
+                                    </div>
                                 </div>
                             )}
 
@@ -206,11 +209,17 @@ export default function ThemeSettingsCMS() {
                                 <div className="form-row">
                                     <div className="form-group">
                                         <label>Warna Mulai (Start Color)</label>
-                                        <input type="text" value={currentTheme.color1 || ''} onChange={(e) => handleThemeChange('color1', e.target.value)} placeholder="#ff0000" />
+                                        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                                            <input type="color" value={currentTheme.color1 || '#ffffff'} onChange={(e) => handleThemeChange('color1', e.target.value)} style={{ width: '40px', height: '40px', padding: 0, border: 'none', borderRadius: '4px', cursor: 'pointer' }} />
+                                            <input type="text" value={currentTheme.color1 || ''} onChange={(e) => handleThemeChange('color1', e.target.value)} placeholder="#ff0000" style={{ flex: 1, padding: '0.8rem', borderRadius: '4px', border: '1px solid #ddd' }} />
+                                        </div>
                                     </div>
                                     <div className="form-group">
                                         <label>Warna Akhir (End Color)</label>
-                                        <input type="text" value={currentTheme.color2 || ''} onChange={(e) => handleThemeChange('color2', e.target.value)} placeholder="#0000ff" />
+                                        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                                            <input type="color" value={currentTheme.color2 || '#ffffff'} onChange={(e) => handleThemeChange('color2', e.target.value)} style={{ width: '40px', height: '40px', padding: 0, border: 'none', borderRadius: '4px', cursor: 'pointer' }} />
+                                            <input type="text" value={currentTheme.color2 || ''} onChange={(e) => handleThemeChange('color2', e.target.value)} placeholder="#0000ff" style={{ flex: 1, padding: '0.8rem', borderRadius: '4px', border: '1px solid #ddd' }} />
+                                        </div>
                                     </div>
                                     {currentTheme.type === 'linear_gradient' && (
                                         <div className="form-group">
@@ -292,13 +301,16 @@ export default function ThemeSettingsCMS() {
                                     </div>
                                     <div className="form-group" style={{ flex: 1 }}>
                                         <label>Warna Divider (Divider Color)</label>
-                                        <input
-                                            type="text"
-                                            value={currentTheme.divider_color || '#ffffff'}
-                                            onChange={(e) => handleThemeChange('divider_color', e.target.value)}
-                                            placeholder="#ffffff"
-                                            style={{ padding: '0.8rem', width: '100%', borderRadius: '4px', border: '1px solid #ddd' }}
-                                        />
+                                        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                                            <input type="color" value={currentTheme.divider_color || '#ffffff'} onChange={(e) => handleThemeChange('divider_color', e.target.value)} style={{ width: '40px', height: '40px', padding: 0, border: 'none', borderRadius: '4px', cursor: 'pointer' }} />
+                                            <input
+                                                type="text"
+                                                value={currentTheme.divider_color || '#ffffff'}
+                                                onChange={(e) => handleThemeChange('divider_color', e.target.value)}
+                                                placeholder="#ffffff"
+                                                style={{ flex: 1, padding: '0.8rem', borderRadius: '4px', border: '1px solid #ddd' }}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             )}
