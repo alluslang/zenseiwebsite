@@ -276,18 +276,30 @@ export default function ThemeSettingsCMS() {
                             </div>
 
                             {currentTheme.show_divider && (
-                                <div className="form-group" style={{ marginTop: '1rem', marginLeft: '1rem' }}>
-                                    <label>Bentuk Divider (Divider Shape)</label>
-                                    <select
-                                        value={currentTheme.divider_shape || 'wave'}
-                                        onChange={(e) => handleThemeChange('divider_shape', e.target.value)}
-                                        style={{ padding: '0.8rem', width: '100%', borderRadius: '4px', border: '1px solid #ddd' }}
-                                    >
-                                        <option value="wave">Wave (Gelombang)</option>
-                                        <option value="curve-up">Curve Up (Melengkung naik)</option>
-                                        <option value="curve-down">Curve Down (Melengkung turun)</option>
-                                        <option value="triangle">Triangle (Segitiga)</option>
-                                    </select>
+                                <div className="form-row" style={{ marginTop: '1rem', marginLeft: '1rem' }}>
+                                    <div className="form-group" style={{ flex: 1 }}>
+                                        <label>Bentuk Divider (Divider Shape)</label>
+                                        <select
+                                            value={currentTheme.divider_shape || 'wave'}
+                                            onChange={(e) => handleThemeChange('divider_shape', e.target.value)}
+                                            style={{ padding: '0.8rem', width: '100%', borderRadius: '4px', border: '1px solid #ddd' }}
+                                        >
+                                            <option value="wave">Wave (Gelombang)</option>
+                                            <option value="curve-up">Curve Up (Melengkung naik)</option>
+                                            <option value="curve-down">Curve Down (Melengkung turun)</option>
+                                            <option value="triangle">Triangle (Segitiga)</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group" style={{ flex: 1 }}>
+                                        <label>Warna Divider (Divider Color)</label>
+                                        <input
+                                            type="text"
+                                            value={currentTheme.divider_color || '#ffffff'}
+                                            onChange={(e) => handleThemeChange('divider_color', e.target.value)}
+                                            placeholder="#ffffff"
+                                            style={{ padding: '0.8rem', width: '100%', borderRadius: '4px', border: '1px solid #ddd' }}
+                                        />
+                                    </div>
                                 </div>
                             )}
                         </div>

@@ -261,7 +261,7 @@ export default function Products() {
             {
                 themes.products?.show_divider && (
                     <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
-                        <SectionDivider color={themes.promo?.color || '#fcfbf9'} shape={themes.products?.divider_shape || 'wave'} />
+                        <SectionDivider color={themes.products?.divider_color || themes.promo?.color || '#fcfbf9'} shape={themes.products?.divider_shape || 'wave'} />
                     </div>
                 )
             }
