@@ -21,8 +21,7 @@ export default function ActionButtonsCMS() {
         setLoading(true);
         const { data, error } = await supabase
             .from('action_buttons')
-            .select('*')
-            .order('label_en', { ascending: true }); // Alphabetical
+            .select('*');
 
         if (data && !error) {
             setButtons(data);
@@ -82,7 +81,7 @@ export default function ActionButtonsCMS() {
                 <form onSubmit={handleSave} className="cms-form">
                     <div style={{ marginBottom: '1rem', padding: '1rem', background: '#e8f5e9', borderRadius: '8px' }}>
                         <strong>Tombol yang sedang diubah:</strong> {currentButton.button_key} <br />
-                        <small style={{ color: '#555' }}>Label ID: {currentButton.label_id} | Label EN: {currentButton.label_en}</small>
+                        <small style={{ color: '#555' }}>Key Identifier: {currentButton.button_key}</small>
                     </div>
 
                     <div className="form-group">
@@ -111,10 +110,7 @@ export default function ActionButtonsCMS() {
                     {buttons.map(btn => (
                         <div key={btn.id} style={{ border: '1px solid #ddd', borderRadius: '8px', padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#fff' }}>
                             <div>
-                                <h4 style={{ margin: '0 0 0.5rem 0', color: '#222' }}>{btn.label_id} / {btn.label_en}</h4>
-                                <p style={{ margin: '0 0 0.2rem 0', fontSize: '0.85rem', color: '#777', fontFamily: 'monospace' }}>
-                                    Key: {btn.button_key}
-                                </p>
+                                <h4 style={{ margin: '0 0 0.5rem 0', color: '#222' }}>{btn.button_key}</h4>
                                 <a href={btn.url} target="_blank" rel="noreferrer" style={{ fontSize: '0.9rem', color: '#0277bd', wordBreak: 'break-all' }}>
                                     {btn.url}
                                 </a>
