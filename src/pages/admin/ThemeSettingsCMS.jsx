@@ -72,21 +72,27 @@ export default function ThemeSettingsCMS() {
         const toastId = toast.loading('Saving theme settings...');
 
         try {
+            let saveError = null;
             if (activeTab === 'logos') {
-                await supabase
+                const { error } = await supabase
                     .from('site_settings')
                     .upsert({ setting_key: 'logos', setting_value: logos, updated_at: new Date() }, { onConflict: 'setting_key' });
+                saveError = error;
             } else {
                 // Save the currently selected section theme
                 const settingKey = `theme_${selectedSection}`;
-                await supabase
+                const { error } = await supabase
                     .from('site_settings')
                     .upsert({ setting_key: settingKey, setting_value: themes[selectedSection], updated_at: new Date() }, { onConflict: 'setting_key' });
+                saveError = error;
             }
+
+            if (saveError) throw saveError;
 
             toast.success('Settings saved successfully!', { id: toastId });
         } catch (error) {
-            toast.error(`Error saving settings.`, { id: toastId });
+            console.error('Save error:', error);
+            toast.error(`Error saving settings: ${error.message || 'Unknown error'}`, { id: toastId });
         } finally {
             setSaving(false);
         }
