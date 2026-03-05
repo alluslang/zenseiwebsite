@@ -28,6 +28,7 @@ export default function PromoCMS() {
                 id: null,
                 text_id: '',
                 text_en: '',
+                link_url: '',
                 is_active: false
             });
         }
@@ -55,6 +56,7 @@ export default function PromoCMS() {
                 .update({
                     text_id: promoContent.text_id,
                     text_en: promoContent.text_en,
+                    link_url: promoContent.link_url,
                     is_active: promoContent.is_active
                 })
                 .eq('id', promoContent.id);
@@ -66,6 +68,7 @@ export default function PromoCMS() {
                 .insert([{
                     text_id: promoContent.text_id,
                     text_en: promoContent.text_en,
+                    link_url: promoContent.link_url,
                     is_active: promoContent.is_active
                 }]);
             error = insertError;
@@ -132,6 +135,17 @@ export default function PromoCMS() {
                         rows="3"
                         placeholder="Example: 🔥 SPECIAL DEAL: 20% Off today! 🔥"
                         required
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label>Tautan Promo (Tujuan Link) - Opsional 🔗</label>
+                    <input
+                        type="url"
+                        name="link_url"
+                        value={promoContent?.link_url || ''}
+                        onChange={handleChange}
+                        placeholder="Contoh: https://wa.me/62... atau biarkan kosong"
                     />
                 </div>
 

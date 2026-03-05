@@ -54,19 +54,26 @@ export default function PromoBanner({ isBannerVisible, setIsBannerVisible }) {
     const langCode = i18n.language.startsWith('id') ? 'id' : 'en';
     const textToShow = promoContent ? promoContent[`text_${langCode}`] : (langCode === 'id' ? dummyTextId : dummyTextEn);
 
+    const renderText = (text, key) => {
+        if (promoContent && promoContent.link_url) {
+            return (
+                <a key={key} href={promoContent.link_url} target="_blank" rel="noreferrer" className="marquee-text" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: '4px' }}>
+                    {text}
+                </a>
+            );
+        }
+        return <span key={key} className="marquee-text">{text}</span>;
+    };
+
     return (
         <div className="promo-banner">
             <div className="promo-banner-content">
                 <div className="marquee-container">
                     <div className="marquee-content">
-                        {[...Array(10)].map((_, i) => (
-                            <span key={`a-${i}`} className="marquee-text">{textToShow}</span>
-                        ))}
+                        {[...Array(10)].map((_, i) => renderText(textToShow, `a-${i}`))}
                     </div>
                     <div className="marquee-content" aria-hidden="true">
-                        {[...Array(10)].map((_, i) => (
-                            <span key={`b-${i}`} className="marquee-text">{textToShow}</span>
-                        ))}
+                        {[...Array(10)].map((_, i) => renderText(textToShow, `b-${i}`))}
                     </div>
                 </div>
                 <button
