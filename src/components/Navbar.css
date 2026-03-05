@@ -91,6 +91,14 @@ body.has-promo-banner .navbar-container {
     width: auto;
 }
 
+.desktop-logo {
+    display: block;
+}
+
+.mobile-logo {
+    display: none;
+}
+
 .nav-actions {
     display: flex;
     gap: 0.5rem;
